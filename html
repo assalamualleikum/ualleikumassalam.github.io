@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Local Service</title>
+  <style>
+    :root {
+      --bg-main: #0a0a0b;
+      --bg-card: #141415;
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --accent: #ffffff;
+      --border: rgba(255,255,255,0.08);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-stack);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 24px; }
+
+    /* Hero Section */
+    .hero { margin-top: 60px; margin-bottom: 48px; }
+    
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .gallery img:first-child { grid-column: span 2; height: 260px; }
+
+    /* Services Bento */
+    .services-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .bento {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-info h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+    .card-info p { font-size: 14px; color: var(--text-muted); }
+    .card-price { font-size: 16px; font-weight: 600; }
+
+    /* CTA Button */
+    .cta-container {
+      position: sticky;
+      bottom: 24px;
+      z-index: 10;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: var(--accent);
+      color: #000;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    /* Simple Fade In Animation */
+    .fade-in {
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <section class="hero fade-in">
+      <!-- Название компании клиента -->
+      <span class="badge">Гарантия 2 года</span>
+      <h1 class="title">Замена автостекол<br>и премиум детейлинг.</h1>
+      <p class="subtitle">Используем только оригинальные материалы. Работаем на результат, а не на поток.</p>
+    </section>
+
+    <!-- Сюда вставляются фото клиента из 2ГИС -->
+    <section class="gallery fade-in delay-1">
+      <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=600&q=80" alt="Работа 1">
+      <img src="https://images.unsplash.com/photo-1550503193-4ee265538e14?auto=format&fit=crop&w=300&q=80" alt="Работа 2">
+      <img src="https://images.unsplash.com/photo-1600661653561-629509216228?auto=format&fit=crop&w=300&q=80" alt="Работа 3">
+    </section>
+
+    <section class="services fade-in delay-2">
+      <h2 class="services-title">Наши услуги</h2>
+      <div class="bento">
+        <div class="card">
+          <div class="card-info">
+            <h3>Замена лобового стекла</h3>
+            <p>Установка за 2 часа с гарантией</p>
+          </div>
+          <div class="card-price">от 15 000 ₸</div>
+        </div>
+        <div class="card">
+          <div class="card-info">
+            <h3>Ремонт сколов</h3>
+            <p>Остановка трещин фотополимером</p>
+          </div>
+          <div class="card-price">от 3 000 ₸</div>
+        </div>
+        <div class="card">
+          <div class="card-info">
+            <h3>Полировка кузова</h3>
+            <p>Глубокая восстановительная полировка</p>
+          </div>
+          <div class="card-price">от 45 000 ₸</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ссылка на WhatsApp клиента -->
+    <div class="cta-container fade-in delay-2">
+      <a href="https://wa.me/77000000000?text=Здравствуйте,%20хочу%20узнать%20стоимость" class="btn">Написать в WhatsApp</a>
+    </div>
+  </div>
+
+</body>
+</html>
