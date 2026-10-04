@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ворота Болат. Кованые ворота, двери и навесы в Таразе</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #090a0d;
+      --bg-card: rgba(18, 20, 26, 0.85);
+      --bg-card-hover: rgba(26, 29, 38, 0.95);
+      
+      --text-main: #f5f6f9;
+      --text-muted: #9aa1b2;
+      --text-dim: #5c6270;
+
+      /* Оттенок кованого металла и благородной латуни */
+      --accent-brass: #c5a880;
+      --accent-brass-glow: rgba(197, 168, 128, 0.12);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(197, 168, 128, 0.4);
+
+      --font-heading: 'Cinzel', serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 90px;
+    }
+
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* Шапка */
+    .header {
+      padding: 36px 0 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 32px;
+    }
+
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-brass);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-family: var(--font-heading);
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Гарантийные метки */
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 32px;
+    }
+
+    .badge-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    /* Витрина работ */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #14151a;
+      height: 200px;
+    }
+
+    .gallery-item.large {
+      grid-column: span 2;
+      height: 260px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Блок услуг и цен */
+    .services-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .service-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .service-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .service-price {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--accent-brass);
+      white-space: nowrap;
+    }
+
+    /* Этапы работы */
+    .steps-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 36px;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .steps-list li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .step-num {
+      font-family: var(--font-mono);
+      color: var(--accent-brass);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* Нижняя прилипающая плашка связи */
+    .cta-fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(9, 10, 13, 0.92);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 16px 20px;
+      z-index: 50;
+    }
+
+    .cta-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-wa {
+      flex: 2;
+      background: #25d366;
+      color: #050608;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn-wa:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .btn-call {
+      flex: 1;
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header">
+      <span class="kicker">Тараз. Цех художественной ковки</span>
+      <h1 class="title">Ворота Болат</h1>
+      <p class="subtitle">
+        Изготовление кованых ворот, бронированных входных дверей и навесов любой сложности. Ручная работа, плотный металл и честная гарантия.
+      </p>
+
+      <div class="badges">
+        <span class="badge-item">Гарантия 12 месяцев</span>
+        <span class="badge-item">Замер и 3D-дизайн бесплатно</span>
+        <span class="badge-item">Доставка и установка</span>
+      </div>
+    </header>
+
+    <!-- Фото объектов -->
+    <section>
+      <h2 class="section-title">Примеры готовых объектов</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item large">
+          <!-- Реальное фото работ цеха Болата из 2ГИС -->
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="Кованые ворота ручной работы">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80" alt="Монтаж и подгонка">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80" alt="Металлоконструкции и швы">
+        </div>
+      </div>
+    </section>
+
+    <!-- Цены и услуги -->
+    <section>
+      <h2 class="section-title">Ориентировочная стоимость</h2>
+      <div class="services-stack">
+        <div class="service-card">
+          <div class="service-info">
+            <h3>Кованые распашные ворота</h3>
+            <p>С элементами ручной ковки и покраской</p>
+          </div>
+          <div class="service-price">от 250 000 ₸</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <h3>Входные кованые двери</h3>
+            <p>Утепленные, с надежной фурнитурой</p>
+          </div>
+          <div class="service-price">от 180 000 ₸</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <h3>Навесы для двора и авто</h3>
+            <p>Поликарбонат или профлист, усиленная ферма</p>
+          </div>
+          <div class="service-price">от 18 000 ₸/м²</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-info">
+            <h3>Премиальные откатные ворота</h3>
+            <p>Под автоматику, индивидуальный рисунок</p>
+          </div>
+          <div class="service-price">до 2 000 000 ₸</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Порядок заказа -->
+    <section class="steps-block">
+      <h2 class="section-title" style="margin-bottom: 0;">Как проходит работа</h2>
+      <ul class="steps-list">
+        <li>
+          <span class="step-num">01.</span>
+          <span>Выезд мастера на замер по Таразу и согласование эскиза.</span>
+        </li>
+        <li>
+          <span class="step-num">02.</span>
+          <span>Заключение договора с фиксированной сметой без доплат.</span>
+        </li>
+        <li>
+          <span class="step-num">03.</span>
+          <span>Изготовление в цеху, доставка, монтаж и гарантия 12 месяцев.</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Прилипающие кнопки связи -->
+  <div class="cta-fixed">
+    <div class="cta-inner">
+      <a href="https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20ворот%20и%20вызвать%20на%20замер" class="btn-wa" target="_blank" rel="noopener">
+        Написать в WhatsApp
+      </a>
+      <a href="tel:+77073313731" class="btn-call">
+        Позвонить
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
