@@ -3,44 +3,656 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Цех Болат — Монументальная ковка и металлоконструкции</title>
+  <title>Кузнечная Мануфактура Болат | Архитектурная ковка</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
   <style>
     :root {
-      --bg: #08090b;
-      --surface: #101216;
-      --surface-elevated: #16181f;
-      --border: rgba(255, 255, 255, 0.07);
-      --border-highlight: rgba(212, 175, 55, 0.35);
+      --bg: #060709;
+      --surface-deep: #0b0c10;
+      --surface-plate: #111319;
+      --surface-lifted: #181b24;
       
-      --text: #f3f4f7;
-      --text-muted: #8a91a0;
-      --text-dim: #4f5563;
-      
+      --border-faint: rgba(255, 255, 255, 0.05);
+      --border-sheen: rgba(212, 175, 55, 0.4);
+      --border-steel: rgba(160, 170, 185, 0.15);
+
       --gold: #d4af37;
-      --gold-bright: #f3cf58;
-      --gold-glow: rgba(212, 175, 55, 0.12);
-      --steel: #757d8c;
-      
-      --font-display: 'Cinzel', Georgia, serif;
-      --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --gold-champagne: #ecd599;
+      --gold-glow: rgba(212, 175, 55, 0.14);
+      --steel: #8e95a5;
+      --pure: #f8f9fc;
+
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
       --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
-      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      --smooth: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-lux: cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
       background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-main);
+      color: var(--pure);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 120px;
+      overflow-x: hidden;
+    }
+
+    /* Архитектурная координатная сетка на фоне */
+    .blueprint-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .vignette {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, transparent 20%, var(--bg) 80%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Навигация */
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 24px;
+      border-bottom: 1px solid var(--border-steel);
+    }
+
+    .mark-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .crest {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 13px;
+      color: var(--gold-champagne);
+      background: radial-gradient(circle, #1a1a24 0%, #060709 100%);
+      transform: rotate(45deg);
+    }
+
+    .crest span {
+      transform: rotate(-45deg);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--pure);
+      font-weight: 700;
+    }
+
+    .atelier-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--steel);
+      letter-spacing: 0.05em;
+    }
+
+    /* Герой-манифест */
+    .hero {
+      padding: 56px 0 36px;
+    }
+
+    .serial-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold-champagne);
+      margin-bottom: 16px;
+      padding: 4px 10px;
+      background: rgba(212, 175, 55, 0.06);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 4px;
+    }
+
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 6vw, 52px);
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .hero-h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #ffffff 30%, var(--gold-champagne) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--steel);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* 3D-Bento панели с физикой наклона */
+    .tilt-card {
+      background: var(--surface-plate);
+      border: 1px solid var(--border-faint);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .tilt-card:hover {
+      border-color: var(--border-sheen);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px var(--gold-glow);
+    }
+
+    /* Металлический отблеск на плите */
+    .sheen-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(236, 213, 153, 0.08), transparent 45%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Инженерные метрики */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .metric-plate {
+      background: var(--surface-deep);
+      border: 1px solid var(--border-steel);
+      border-radius: 8px;
+      padding: 16px 14px;
+      position: relative;
+    }
+
+    .metric-plate::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 3px;
+      height: 3px;
+      background: var(--steel);
+      border-radius: 50%;
+    }
+
+    .metric-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold-champagne);
+      margin-bottom: 4px;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--steel);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Калькулятор архитектурной спецификации */
+    .spec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-steel);
+    }
+
+    .spec-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-champagne);
+    }
+
+    .tab-pills {
+      display: flex;
+      gap: 4px;
+      background: var(--surface-deep);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border-steel);
+      margin-bottom: 24px;
+    }
+
+    .pill-btn {
+      flex: 1;
+      padding: 10px 8px;
+      font-size: 12px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      color: var(--steel);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.25s var(--ease-lux);
+    }
+
+    .pill-btn.active {
+      background: var(--surface-lifted);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      border: 1px solid var(--border-sheen);
+    }
+
+    .range-control {
+      margin-bottom: 24px;
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--steel);
+      margin-bottom: 12px;
+    }
+
+    .custom-range {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--surface-deep);
+      border: 1px solid var(--border-steel);
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold) 100%);
+      border: 3px solid #060709;
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.7);
+      cursor: grab;
+      transition: transform 0.15s ease;
+    }
+
+    .custom-range::-webkit-slider-thumb:active {
+      transform: scale(1.15);
+      cursor: grabbing;
+    }
+
+    .estimate-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-steel);
+    }
+
+    .estimate-price {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold-champagne);
+    }
+
+    /* Галерея монолитов */
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pure);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .exhibit-plate {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-steel);
+      background: var(--surface-deep);
+      height: 220px;
+    }
+
+    .exhibit-plate.wide {
+      grid-column: span 2;
+      height: 300px;
+    }
+
+    .exhibit-plate img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.1) brightness(0.9);
+      transition: transform 0.6s var(--ease-lux), filter 0.6s ease;
+    }
+
+    .exhibit-plate:hover img {
+      transform: scale(1.04);
+      filter: contrast(1.15) brightness(1);
+    }
+
+    .exhibit-caption {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(6, 7, 9, 0.88);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--pure);
+      border: 1px solid var(--border-steel);
+    }
+
+    /* Прилипающая тактильная консоль */
+    .console-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(6, 7, 9, 0.94);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-steel);
+      padding: 16px 24px;
+      z-index: 100;
+    }
+
+    .console-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-lux {
+      flex: 3;
+      background: linear-gradient(135deg, #ffffff 0%, var(--gold-champagne) 50%, var(--gold) 100%);
+      color: #060709;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      padding: 18px;
+      border-radius: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 24px rgba(212, 175, 55, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-lux:active {
+      transform: scale(0.98);
+    }
+
+    .btn-call {
+      flex: 1;
+      background: var(--surface-plate);
+      border: 1px solid var(--border-steel);
+      color: var(--pure);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      padding: 18px;
+      border-radius: 10px;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blueprint-grid"></div>
+  <div class="vignette"></div>
+
+  <div class="shell">
+    <!-- Шапка мануфактуры -->
+    <header class="masthead">
+      <div class="mark-group">
+        <div class="crest"><span>Б</span></div>
+        <div>
+          <div class="brand-title">Atelier Bolat</div>
+          <div class="atelier-tag">Тараз • Основано на металле</div>
+        </div>
+      </div>
+      <div class="atelier-tag" style="color: var(--gold-champagne);">Спецификация 2026</div>
+    </header>
+
+    <!-- Заглавный экран -->
+    <section class="hero">
+      <div class="serial-badge">Капитальные металлоконструкции</div>
+      <h1 class="hero-h1">Архитектурная сталь.<br><em>Тяжелый монолит.</em></h1>
+      <p class="hero-desc">
+        Проектирование и ручная ковка въездных ансамблей, бронированных порталов и светопрозрачных навесов. Безупречная геометрия на массивном толстостенном профиле.
+      </p>
+    </section>
+
+    <!-- Метрики качества -->
+    <div class="metrics-bar">
+      <div class="metric-plate">
+        <div class="metric-val">12 мес.</div>
+        <div class="metric-sub">Гарантия на шов</div>
+      </div>
+      <div class="metric-plate">
+        <div class="metric-val">0 ₸</div>
+        <div class="metric-sub">Выезд и чертеж</div>
+      </div>
+      <div class="metric-plate">
+        <div class="metric-val">4 слоя</div>
+        <div class="metric-sub">Кузнечная эмаль</div>
+      </div>
+    </div>
+
+    <!-- Интерактивная 3D-плита калькулятора -->
+    <div class="tilt-card" id="tiltPlate">
+      <div class="sheen-overlay" id="sheen"></div>
+      <div class="card-inner">
+        <div class="spec-header">
+          <span class="spec-title">Конфигуратор объекта</span>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--steel);">Калькуляция сметы</span>
+        </div>
+
+        <div class="tab-pills">
+          <button class="pill-btn active" onclick="setMode(0, 'gates', 'Въездная группа')">Ворота</button>
+          <button class="pill-btn" onclick="setMode(1, 'doors', 'Входной портал')">Двери</button>
+          <button class="pill-btn" onclick="setMode(2, 'canopy', 'Светопрозрачный навес')">Навесы</button>
+        </div>
+
+        <div class="range-control">
+          <div class="range-labels">
+            <span>Категория плотности ковки:</span>
+            <span id="rank-name" style="font-weight: 600; color: #ffffff;">Сдержанная классика</span>
+          </div>
+          <input type="range" min="1" max="4" value="1" class="custom-range" id="specRange" oninput="recalc()">
+        </div>
+
+        <div class="estimate-display">
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--steel);">Ориентировочный бюджет:</div>
+            <div style="font-size: 11px; color: var(--steel);">с учетом антикоррозийной обработки и монтажа</div>
+          </div>
+          <div class="estimate-price" id="costValue">250 000 ₸</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Галерея экспонатов -->
+    <section>
+      <div class="section-label">
+        <span>Реализованные проекты</span>
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--steel);">Тараз</span>
+      </div>
+
+      <div class="gallery-stack">
+        <div class="exhibit-plate wide">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80" alt="Кованые распашные ворота">
+          <div class="exhibit-caption">Объект №084 • Распашной въездной портал</div>
+        </div>
+        <div class="exhibit-plate">
+          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=600&q=80" alt="Арочный навес">
+          <div class="exhibit-caption">Объект №112 • Арочная ферма</div>
+        </div>
+        <div class="exhibit-plate">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" alt="Входная группа">
+          <div class="exhibit-caption">Объект №097 • Бронированная дверь</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Прилипающая консоль вызова мастера -->
+  <div class="console-dock">
+    <div class="console-inner">
+      <a href="https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20согласовать%20проект%20и%20вызвать%20на%20замер" id="targetWa" target="_blank" rel="noopener" class="btn-lux">
+        Согласовать проект в WhatsApp
+      </a>
+      <a href="tel:+77073313731" class="btn-call">
+        Тел
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // 1. Синтез механического щелчка на Web Audio API (Haptic Feedback)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playClick() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(30Чтобы поднять планку до уровня закрытого архитектурного бюро и швейцарских часовых мануфактур, нужно убрать любые намеки на «типовой лендинг» и добавить ощущение физической тяжести, коллекционного металла и кинематографичной оптики.
+
+Вот 5 инженерных решений из дизайн-арсенала, которые выводят проект на максимальный ценовой уровень:
+
+1. **Голографический металлический блеск (Specular Metallic Reflection):** 
+   При движении курсора или наклоне смартфона по карточкам и крупным заголовкам прокатывается мягкий стальной отблеск, имитирующий шлифованный титан и вороненую бронзу.
+2. **Кинематографичная глубина кадра (Parallax Depth):** 
+   Фотографии объектов не просто масштабируются при наведении, а создают эффект окна: рамка остается на месте, а изображение внутри совершает микро-сдвиг с мягким размытием по краям.
+3. **Тактильный интерактивный разрез металла (Dynamic SVG Specimen):** 
+   Интерактивная векторная схема толщины профильной трубы и антикоррозийного «пирога» (металл → цинкосодержащий грунт → кузнечная эмаль → патина), которая реагирует на клики.
+4. **Типографический монохромный люкс:** 
+   Сдержанная, ультра-контрастная швейцарская сетка: крупный архитектурный заголовок с деликатным золотым тиснением и ультратонкие инженерные моноширинные подписи со статусом серийных номеров.
+5. **Звуковой визуализатор или микро-физика отдачи:** 
+   Ползунок калькулятора при переключении шагов создает ощущение механического тумблера с легким «пружинным щелчком» интерфейса.
+
+Ниже приведен пересобранный код для `vorota-bolat/index.html`.
+
+---
+
+### Код `vorota-bolat/index.html` (Уровень: Архитектурный монолит)
+
+<details open>
+<summary><b>Нажмите, чтобы развернуть код монолита</b></summary>
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цех Болат — Монументальная архитектурная ковка</title>
+  
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+  <link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap)" rel="stylesheet">
+  
+  <script src="[https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js](https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js)"></script>
+
+  <style>
+    :root {
+      --bg-void: #060709;
+      --surface-obsidian: #0e1014;
+      --surface-card: rgba(16, 18, 24, 0.7);
+      
+      --metal-gold: #c9a86a;
+      --metal-gold-bright: #e8caa4;
+      --metal-steel: #8e95a5;
+      --metal-border: rgba(255, 255, 255, 0.06);
+      --metal-border-glow: rgba(201, 168, 106, 0.4);
+
+      --text-pure: #f8f9fa;
+      --text-muted: #848b99;
+      --text-dim: #444a56;
+
+      --font-arch: 'Cinzel', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+      
+      --spring: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-pure);
+      font-family: var(--font-body);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       padding-bottom: 120px;
@@ -48,26 +660,26 @@
       position: relative;
     }
 
-    /* Аналоговая текстура шума */
-    .grain {
+    /* Аналоговое зерно */
+    .film-grain {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='[http://www.w3.org/2000/svg'%3E%3Cfilter](http://www.w3.org/2000/svg'%3E%3Cfilter) id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Фоновый амбиент */
-    .ambient-glow {
+    /* Фоновый направленный свет */
+    .ambient-ray {
       position: fixed;
-      top: -150px;
+      top: -180px;
       left: 50%;
       transform: translateX(-50%);
-      width: 900px;
-      height: 500px;
-      background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.1) 0%, transparent 65%);
+      width: 1100px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(201, 168, 106, 0.08) 0%, transparent 70%);
       pointer-events: none;
       z-index: 1;
     }
@@ -75,195 +687,193 @@
     .shell {
       position: relative;
       z-index: 3;
-      max-width: 680px;
+      max-width: 660px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
     /* Навигация */
-    .top-bar {
+    .top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 28px 0 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 32px 0 24px;
+      border-bottom: 1px solid var(--metal-border);
     }
 
-    .brand-mark {
-      font-family: var(--font-display);
-      font-size: 14px;
-      letter-spacing: 0.18em;
+    .atelier-title {
+      font-family: var(--font-arch);
+      font-size: 13px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--metal-gold);
     }
 
-    .geo-pill {
+    .atelier-status {
       font-family: var(--font-mono);
       font-size: 11px;
       color: var(--text-muted);
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 5px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
     }
 
-    .geo-dot {
-      width: 6px;
-      height: 6px;
+    .pulse-dot {
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
-      background: #55c48b;
-      box-shadow: 0 0 8px #55c48b;
+      background: var(--metal-gold);
+      box-shadow: 0 0 10px var(--metal-gold);
     }
 
-    /* Главный экран */
+    /* Первый экран */
     .hero {
-      padding: 48px 0 32px;
+      padding: 56px 0 36px;
     }
 
-    .hero-pre {
+    .serial-tag {
       font-family: var(--font-mono);
       font-size: 11px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--steel);
-      margin-bottom: 12px;
+      color: var(--metal-steel);
+      margin-bottom: 16px;
       display: block;
     }
 
     .hero-h1 {
-      font-family: var(--font-display);
-      font-size: clamp(32px, 6.5vw, 46px);
-      line-height: 1.12;
-      font-weight: 800;
+      font-family: var(--font-arch);
+      font-size: clamp(34px, 7vw, 50px);
+      line-height: 1.1;
+      font-weight: 700;
       letter-spacing: -0.01em;
-      margin-bottom: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero-h1 span {
+      background: linear-gradient(135deg, var(--text-pure) 20%, var(--metal-gold-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero-desc {
       font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.65;
+      line-height: 1.7;
+      font-weight: 300;
     }
 
-    /* Монументальные характеристики с подсветкой курсора */
-    .specs-grid {
+    /* Спецификация */
+    .metric-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 28px 0 36px;
+      gap: 12px;
+      margin: 32px 0 44px;
     }
 
-    .spec-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 12px;
+    .metric-card {
+      background: var(--surface-card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--metal-border);
+      border-radius: 12px;
+      padding: 18px 14px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s ease;
     }
 
-    .spec-item:hover {
-      border-color: var(--border-highlight);
-    }
-
-    .spec-num {
+    .metric-val {
       font-family: var(--font-mono);
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--metal-gold);
       margin-bottom: 2px;
     }
 
-    .spec-label {
+    .metric-sub {
       font-size: 11px;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
 
-    /* Интерактивный Bento-калькулятор со спотлайтом */
-    .spotlight-card {
+    /* Интерактивный терминал расчета */
+    .terminal-box {
       position: relative;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 26px;
-      margin-bottom: 36px;
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--metal-border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 44px;
       overflow: hidden;
     }
 
-    .spotlight-card::before {
+    .terminal-box::before {
       content: '';
       position: absolute;
       inset: -1px;
-      border-radius: 16px;
-      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.2), transparent 40%);
+      border-radius: 18px;
+      background: radial-gradient(450px circle at var(--pos-x, 50%) var(--pos-y, 50%), rgba(201, 168, 106, 0.22), transparent 45%);
       pointer-events: none;
       z-index: 1;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.3s ease;
     }
 
-    .spotlight-card:hover::before {
+    .terminal-box:hover::before {
       opacity: 1;
     }
 
-    .card-content {
+    .terminal-content {
       position: relative;
       z-index: 2;
     }
 
-    .calc-header {
+    .terminal-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    .calc-title {
-      font-size: 14px;
-      font-weight: 600;
+    .terminal-label {
+      font-family: var(--font-arch);
+      font-size: 13px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text);
+      color: var(--text-pure);
     }
 
-    /* Скользящий селектор категорий (Sliding Pill) */
-    .tab-track {
+    /* Скользящий монолитный переключатель */
+    .monolith-tabs {
       position: relative;
       display: flex;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.45);
       padding: 4px;
       border-radius: 10px;
-      margin-bottom: 22px;
-      border: 1px solid var(--border);
+      margin-bottom: 26px;
+      border: 1px solid var(--metal-border);
     }
 
-    .tab-slider {
+    .tab-cursor {
       position: absolute;
       top: 4px;
       bottom: 4px;
       left: 4px;
       width: calc((100% - 8px) / 3);
-      background: var(--surface-elevated);
-      border-radius: 7px;
-      border: 1px solid var(--border-highlight);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      transition: transform 0.35s var(--spring);
-      z-index: 1;
+      background: var(--surface-obsidian);
+      border-radius: 8px;
+      border: 1px solid var(--metal-border-glow);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      transition: transform 0.4s var(--spring);
       pointer-events: none;
+      z-index: 1;
     }
 
-    .tab-btn {
+    .tab-item {
       flex: 1;
       position: relative;
       z-index: 2;
-      padding: 10px 8px;
+      padding: 11px 8px;
       font-size: 12px;
       font-weight: 500;
       border: none;
@@ -274,16 +884,16 @@
       transition: color 0.2s ease;
     }
 
-    .tab-btn.active {
-      color: var(--gold-bright);
+    .tab-item.active {
+      color: var(--metal-gold-bright);
       font-weight: 600;
     }
 
-    .calc-row {
-      margin-bottom: 22px;
+    .range-wrap {
+      margin-bottom: 26px;
     }
 
-    .calc-label-row {
+    .range-meta {
       display: flex;
       justify-content: space-between;
       font-size: 13px;
@@ -291,202 +901,203 @@
       margin-bottom: 12px;
     }
 
-    /* Кастомный тактильный слайдер */
-    .calc-slider {
+    .metal-range {
       width: 100%;
       height: 6px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.08);
       outline: none;
       -webkit-appearance: none;
       cursor: pointer;
     }
 
-    .calc-slider::-webkit-slider-thumb {
+    .metal-range::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: var(--gold);
-      border: 3px solid #08090b;
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
+      background: linear-gradient(135deg, var(--metal-gold-bright) 0%, var(--metal-gold) 100%);
+      border: 3px solid #060709;
+      box-shadow: 0 0 16px rgba(201, 168, 106, 0.6);
       cursor: grab;
       transition: transform 0.15s ease;
     }
 
-    .calc-slider::-webkit-slider-thumb:active {
-      transform: scale(1.2);
+    .metal-range::-webkit-slider-thumb:active {
+      transform: scale(1.18);
       cursor: grabbing;
     }
 
-    /* Анимированная плашка цены */
-    .calc-result {
+    .terminal-total {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
+      padding-top: 22px;
+      border-top: 1px solid var(--metal-border);
     }
 
-    .result-label {
-      font-size: 12px;
+    .total-title {
+      font-size: 11px;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .result-val {
+    .total-cost {
       font-family: var(--font-mono);
       font-size: 26px;
       font-weight: 700;
-      color: var(--gold);
+      color: var(--metal-gold);
       display: inline-block;
-      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    /* Галерея работ */
-    .section-head {
-      font-family: var(--font-display);
-      font-size: 18px;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
+    /* Галерея с параллакс-зумом */
+    .section-headline {
+      font-family: var(--font-arch);
+      font-size: 16px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
       display: flex;
       justify-content: space-between;
       align-items: baseline;
     }
 
-    .gallery-masonry {
+    .gallery-stack {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 36px;
+      margin-bottom: 44px;
     }
 
-    .img-box {
+    .frame-box {
       position: relative;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      height: 210px;
-      cursor: pointer;
+      border: 1px solid var(--metal-border);
+      background: var(--surface-obsidian);
+      height: 220px;
     }
 
-    .img-box.span-2 {
+    .frame-box.full-span {
       grid-column: span 2;
-      height: 280px;
+      height: 290px;
     }
 
-    .img-box img {
+    .frame-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: contrast(1.05);
-      transition: transform 0.5s var(--smooth);
+      filter: contrast(1.08) brightness(0.95);
+      transition: transform 0.6s var(--spring), filter 0.6s ease;
     }
 
-    .img-box:hover img {
-      transform: scale(1.05);
+    .frame-box:hover img {
+      transform: scale(1.04);
+      filter: contrast(1.12) brightness(1.02);
     }
 
-    .img-tag {
+    .frame-tag {
       position: absolute;
       bottom: 12px;
       left: 12px;
-      background: rgba(8, 9, 11, 0.88);
-      backdrop-filter: blur(8px);
+      background: rgba(6, 7, 9, 0.9);
+      backdrop-filter: blur(10px);
       padding: 5px 12px;
       border-radius: 6px;
       font-size: 11px;
       font-family: var(--font-mono);
-      color: var(--text);
-      border: 1px solid var(--border);
+      color: var(--text-pure);
+      border: 1px solid var(--metal-border);
     }
 
-    /* Инженерные принципы (Bento) */
-    .standards-list {
+    /* Инженерный разрез (Архитектурные стандарты) */
+    .spec-stack {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-bottom: 36px;
+      margin-bottom: 44px;
     }
 
-    .standard-row {
-      background: var(--surface);
-      border: 1px solid var(--border);
+    .spec-block {
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--metal-border);
       padding: 18px 20px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 16px;
-      transition: border-color 0.3s ease, transform 0.2s ease;
+      transition: border-color 0.25s ease, transform 0.2s ease;
     }
 
-    .standard-row:hover {
-      border-color: var(--border-highlight);
+    .spec-block:hover {
+      border-color: var(--metal-border-glow);
       transform: translateY(-2px);
     }
 
-    .std-bullet {
-      width: 10px;
-      height: 10px;
-      background: var(--gold);
+    .spec-rhomb {
+      width: 9px;
+      height: 9px;
+      background: var(--metal-gold);
       transform: rotate(45deg);
       flex-shrink: 0;
-      box-shadow: 0 0 10px var(--gold-glow);
+      box-shadow: 0 0 12px rgba(201, 168, 106, 0.4);
     }
 
-    .std-text h4 {
+    .spec-copy h4 {
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
-    .std-text p {
+    .spec-copy p {
       font-size: 13px;
       color: var(--text-muted);
+      font-weight: 300;
     }
 
-    /* Нижний прилипающий док */
-    .dock {
+    /* Прилипающая панель вызова мастера */
+    .action-dock {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(8, 9, 11, 0.94);
-      backdrop-filter: blur(16px);
-      border-top: 1px solid var(--border);
+      background: rgba(6, 7, 9, 0.94);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid var(--metal-border);
       padding: 14px 20px;
       z-index: 99;
     }
 
-    .dock-content {
-      max-width: 680px;
+    .dock-container {
+      max-width: 660px;
       margin: 0 auto;
       display: flex;
       gap: 12px;
     }
 
-    .dock-btn-main {
+    .btn-atelier {
       flex: 3;
-      background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
-      color: #060708;
+      background: linear-gradient(135deg, var(--metal-gold-bright) 0%, var(--metal-gold) 100%);
+      color: #050608;
       text-decoration: none;
       font-weight: 700;
       font-size: 14px;
       text-align: center;
       padding: 16px;
       border-radius: 10px;
-      letter-spacing: 0.02em;
-      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
-      transition: transform 0.2s var(--smooth);
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 24px rgba(201, 168, 106, 0.25);
+      transition: transform 0.2s var(--spring);
     }
 
-    .dock-btn-sec {
+    .btn-call-sub {
       flex: 1;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
+      background: var(--surface-card);
+      border: 1px solid var(--metal-border);
+      color: var(--text-pure);
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
@@ -498,155 +1109,152 @@
 </head>
 <body>
 
-  <div class="grain"></div>
-  <div class="ambient-glow"></div>
+  <div class="film-grain"></div>
+  <div class="ambient-ray"></div>
 
   <div class="shell">
-    <div class="top-bar">
-      <div class="brand-mark">Кузнечный Цех Болат</div>
-      <div class="geo-pill">
-        <span class="geo-dot"></span>
-        <span>Тараз • Замер день в день</span>
+    <nav class="top-nav">
+      <div class="atelier-title">Atelier Bolat • Тараз</div>
+      <div class="atelier-status">
+        <span class="pulse-dot"></span>
+        <span>Прием заказов на ноябрь</span>
       </div>
-    </div>
+    </nav>
 
-    <section class="hero">
-      <span class="hero-pre">Мастерская художественной ковки</span>
-      <h1 class="hero-h1">Металл на поколения.<br>Ворота. Двери. Навесы.</h1>
+    <header class="hero">
+      <span class="serial-tag">Серия 2026 / Архитектурная ковка</span>
+      <h1 class="hero-h1">Металл как искусство.<br><span>Ворота. Двери. Навесы.</span></h1>
       <p class="hero-desc">
-        Работаем с толстостенной сталью и авторской ручной ковкой. Создаем конструкции, которые выдерживают любые ветра и сохраняют геометрию через десятки лет.
+        Создаем монументальные кованые ансамбли из толстостенной стали с индивидуальным проектированием. Каждое изделие проходит четырехступенчатую антикоррозийную обработку.
       </p>
 
-      <div class="specs-grid">
-        <div class="spec-item">
-          <div class="spec-num">12 мес.</div>
-          <div class="spec-label">Гарантия в договоре</div>
+      <div class="metric-row">
+        <div class="metric-card">
+          <div class="metric-val">12 мес.</div>
+          <div class="metric-sub">Гарантия в договоре</div>
         </div>
-        <div class="spec-item">
-          <div class="spec-num">0 ₸</div>
-          <div class="spec-label">Замер и 3D-эскиз</div>
+        <div class="metric-card">
+          <div class="metric-val">0 ₸</div>
+          <div class="metric-sub">Замер и 3D-эскиз</div>
         </div>
-        <div class="spec-item">
-          <div class="spec-num">от 3 дней</div>
-          <div class="spec-label">Срок монтажа</div>
+        <div class="metric-card">
+          <div class="metric-val">от 3 дней</div>
+          <div class="metric-sub">Срок монтажа</div>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Интерактивный Bento-калькулятор со спотлайтом -->
-    <div class="spotlight-card" id="calcSpotlight">
-      <div class="card-content">
-        <div class="calc-header">
-          <span class="calc-title">Калькулятор ориентира</span>
-          <span style="font-size: 11px; color: var(--gold); font-family: var(--font-mono);">точный расчет на замере</span>
+    <!-- Интерактивный терминал ориентировочной сметы -->
+    <div class="terminal-box" id="terminalSpotlight">
+      <div class="terminal-content">
+        <div class="terminal-head">
+          <span class="terminal-label">Интерактивный ориентир</span>
+          <span style="font-size: 11px; color: var(--metal-gold); font-family: var(--font-mono);">точный расчет на замере</span>
         </div>
 
-        <!-- Скользящий селектор -->
-        <div class="tab-track">
-          <div class="tab-slider" id="tabSlider"></div>
-          <button class="tab-btn active" onclick="setCategory(0, 'gates', 'Ворота распашные')">Ворота</button>
-          <button class="tab-btn" onclick="setCategory(1, 'doors', 'Входная дверь')">Двери</button>
-          <button class="tab-btn" onclick="setCategory(2, 'canopy', 'Навес во двор')">Навесы (кв.м)</button>
+        <div class="monolith-tabs">
+          <div class="tab-cursor" id="tabCursor"></div>
+          <button class="tab-item active" onclick="switchTab(0, 'gates', 'Ворота распашные')">Ворота</button>
+          <button class="tab-item" onclick="switchTab(1, 'doors', 'Входная дверь')">Двери</button>
+          <button class="tab-item" onclick="switchTab(2, 'canopy', 'Навес во двор')">Навесы (м²)</button>
         </div>
 
-        <div class="calc-row">
-          <div class="calc-label-row">
-            <span>Сложность ковки / Размер:</span>
-            <span id="scale-label" style="font-weight: 600; color: var(--gold-bright);">Стандартная ковка</span>
+        <div class="range-wrap">
+          <div class="range-meta">
+            <span>Плотность ковки и масштаб:</span>
+            <span id="rangeDescriptor" style="font-weight: 600; color: var(--metal-gold-bright);">Стандартная ковка</span>
           </div>
-          <input type="range" min="1" max="4" value="1" class="calc-slider" id="calcRange" oninput="updatePrice()">
+          <input type="range" min="1" max="4" value="1" class="metal-range" id="metalSlider" oninput="recalc()">
         </div>
 
-        <div class="calc-result">
+        <div class="terminal-total">
           <div>
-            <div class="result-label">Примерная стоимость:</div>
-            <div style="font-size: 11px; color: var(--text-muted);">включая замер, покраску и доставку</div>
+            <div class="total-title">Предварительная смета:</div>
+            <div style="font-size: 11px; color: var(--text-muted);">включая покраску, доставку и монтаж</div>
           </div>
-          <div class="result-val" id="priceDisplay">от 250 000 ₸</div>
+          <div class="total-cost" id="costFigure">от 250 000 ₸</div>
         </div>
       </div>
     </div>
 
-    <!-- Галерея -->
+    <!-- Галерея объектов -->
     <section>
-      <div class="section-head">
-        <span>Фактура и готовые работы</span>
-        <span style="font-size: 12px; color: var(--steel); font-family: var(--font-mono);">Тараз и пригород</span>
+      <div class="section-headline">
+        <span>Фактура и исполнение</span>
+        <span style="font-size: 11px; color: var(--metal-steel); font-family: var(--font-mono);">Тараз и пригород</span>
       </div>
 
-      <div class="gallery-masonry">
-        <div class="img-box span-2">
-          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Кованые ворота ручной работы">
-          <div class="img-tag">Распашные ворота с патиной</div>
+      <div class="gallery-stack">
+        <div class="frame-box full-span">
+          <img src="[https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80](https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80)" alt="Кованые ворота ручной работы">
+          <div class="frame-tag">Распашная въездная группа с патиной</div>
         </div>
-        <div class="img-box">
-          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80" alt="Арочный навес">
-          <div class="img-tag">Ферма под поликарбонат</div>
+        <div class="frame-box">
+          <img src="[https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80](https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80)" alt="Арочный навес">
+          <div class="frame-tag">Усиленная ферма под поликарбонат</div>
         </div>
-        <div class="img-box">
-          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80" alt="Входная группа">
-          <div class="img-tag">Кованая бронедверь</div>
+        <div class="frame-box">
+          <img src="[https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80](https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80)" alt="Входная группа">
+          <div class="frame-tag">Бронированная кованая дверь</div>
         </div>
       </div>
     </section>
 
-    <!-- Инженерные принципы -->
+    <!-- Архитектурные стандарты качества -->
     <section>
-      <div class="section-head">
-        <span>Почему заказывают у Болата</span>
+      <div class="section-headline">
+        <span>Инженерные гарантии Болата</span>
       </div>
 
-      <div class="standards-list">
-        <div class="standard-row">
-          <div class="std-bullet"></div>
-          <div class="std-text">
-            <h4>Антикоррозийная подготовка</h4>
-            <p>Двухслойное грунтование и молотковая кузнечная краска. Металл не цветет после первой зимы.</p>
+      <div class="spec-stack">
+        <div class="spec-block">
+          <div class="spec-rhomb"></div>
+          <div class="spec-copy">
+            <h4>Четырехслойная защита стали</h4>
+            <p>Пескоструйная очистка, фосфатирующий грунт и кузнечная молотковая эмаль. Металл не поддается коррозии.</p>
           </div>
         </div>
-        <div class="standard-row">
-          <div class="std-bullet"></div>
-          <div class="std-text">
-            <h4>Усиленные петли и засовы</h4>
-            <p>Рассчитаны на массивный вес створок. Никакого провисания и скрипа через годы эксплуатации.</p>
+        <div class="spec-block">
+          <div class="spec-rhomb"></div>
+          <div class="spec-copy">
+            <h4>Каплевидные подшипниковые петли</h4>
+            <p>Рассчитаны на массивный вес конструкции. Легкий ход створок одним пальцем без провисаний.</p>
           </div>
         </div>
-        <div class="standard-row">
-          <div class="std-bullet"></div>
-          <div class="std-text">
-            <h4>Фиксированная цена в смете</h4>
-            <p>Сумма, названная на замере, прописывается в договоре и не увеличивается в процессе монтажа.</p>
+        <div class="spec-block">
+          <div class="spec-rhomb"></div>
+          <div class="spec-copy">
+            <h4>Твердая цена в договоре</h4>
+            <p>Фиксируем полную смету на замере. Никаких доплат за крепеж, подрезку или расходные материалы.</p>
           </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- Прилипающий док с магнитной кнопкой -->
-  <div class="dock">
-    <div class="dock-content">
-      <a href="https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20и%20вызвать%20вас%20на%20замер" id="waLink" target="_blank" rel="noopener" class="dock-btn-main magnetic">
+  <!-- Прилипающий док -->
+  <div class="action-dock">
+    <div class="dock-container">
+      <a href="[https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20и%20вызвать%20вас%20на%20замер](https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20и%20вызвать%20вас%20на%20замер)" id="directWa" target="_blank" rel="noopener" class="btn-atelier magnetic-pull">
         Вызвать мастера на замер (WhatsApp)
       </a>
-      <a href="tel:+77073313731" class="dock-btn-sec">
+      <a href="tel:+77073313731" class="btn-call-sub">
         Звонок
       </a>
     </div>
   </div>
 
   <script>
-    // 1. Bento Spotlight (отслеживание курсора/пальца внутри карточки)
-    const card = document.getElementById('calcSpotlight');
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+    // 1. Металлический луч за курсором в терминале (Spotlight)
+    const terminal = document.getElementById('terminalSpotlight');
+    terminal.addEventListener('mousemove', (e) => {
+      const rect = terminal.getBoundingClientRect();
+      terminal.style.setProperty('--pos-x', `${e.clientX - rect.left}px`);
+      terminal.style.setProperty('--pos-y', `${e.clientY - rect.top}px`);
     });
 
-    // 2. Данные калькулятора
-    const scales = {
+    // 2. Сетка цен
+    const catalog = {
       gates: [
         { label: 'Стандартная ковка (эконом)', text: 'от 250 000 ₸' },
         { label: 'Средняя плотность узора', text: 'от 450 000 ₸' },
@@ -660,65 +1268,64 @@
         { label: 'Элитная бронедверь авторской работы', text: 'от 750 000 ₸' }
       ],
       canopy: [
-        { label: 'Навес односкатный (до 20 кв.м)', text: 'от 18 000 ₸/м²' },
+        { label: 'Навес односкатный (до 20 м²)', text: 'от 18 000 ₸/м²' },
         { label: 'Арочный навес под поликарбонат', text: 'от 22 500 ₸/м²' },
         { label: 'Двухскатная усиленная ферма', text: 'от 28 000 ₸/м²' },
         { label: 'Капитальный навес с элементами ковки', text: 'от 40 000 ₸/м²' }
       ]
     };
 
-    let activeCategory = 'gates';
-    let currentTypeName = 'Ворота распашные';
+    let activeTabKey = 'gates';
+    let activeTypeName = 'Ворота распашные';
 
-    // 3. Скользящая подложка табов (Sliding Pill)
-    function setCategory(index, catKey, typeName) {
-      activeCategory = catKey;
-      currentTypeName = typeName;
+    // 3. Скользящий тумблер табов (Sliding Cursor)
+    function switchTab(idx, key, name) {
+      activeTabKey = key;
+      activeTypeName = name;
 
-      const slider = document.getElementById('tabSlider');
-      slider.style.transform = `translateX(${index * 100}%)`;
+      document.getElementById('tabCursor').style.transform = `translateX(${idx * 100}%)`;
 
-      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
-        btn.classList.toggle('active', i === index);
+      document.querySelectorAll('.tab-item').forEach((tab, i) => {
+        tab.classList.toggle('active', i === idx);
       });
 
-      document.getElementById('calcRange').value = 1;
-      updatePrice();
+      document.getElementById('metalSlider').value = 1;
+      recalc();
     }
 
-    // 4. Плавное обновление цены с микровспышкой
-    function updatePrice() {
-      const step = parseInt(document.getElementById('calcRange').value) - 1;
-      const data = scales[activeCategory][step];
-      
-      document.getElementById('scale-label').innerText = data.label;
-      
-      const priceEl = document.getElementById('priceDisplay');
-      gsap.to(priceEl, {
-        scale: 0.95,
-        opacity: 0.6,
+    // 4. Плавная смена чисел со вспышкой
+    function recalc() {
+      const step = parseInt(document.getElementById('metalSlider').value) - 1;
+      const entry = catalog[activeTabKey][step];
+
+      document.getElementById('rangeDescriptor').innerText = entry.label;
+
+      const fig = document.getElementById('costFigure');
+      gsap.to(fig, {
+        scale: 0.94,
+        opacity: 0.5,
         duration: 0.08,
         onComplete: () => {
-          priceEl.innerText = data.text;
-          gsap.to(priceEl, { scale: 1, opacity: 1, duration: 0.15, ease: 'back.out(2)' });
+          fig.innerText = entry.text;
+          gsap.to(fig, { scale: 1, opacity: 1, duration: 0.16, ease: 'back.out(2)' });
         }
       });
 
-      const waText = encodeURIComponent(`Здравствуйте, Болат! Присмотрел на сайте: ${currentTypeName} (${data.label}). Ориентир по цене: ${data.text}. Когда удобно сделать замер?`);
-      document.getElementById('waLink').href = `https://wa.me/77073313731?text=${waText}`;
+      const msg = encodeURIComponent(`Здравствуйте, Болат! Присмотрел на сайте: ${activeTypeName} (${entry.label}). Ориентир по стоимости: ${entry.text}. Когда удобно сделать замер?`);
+      document.getElementById('directWa').href = `[https://wa.me/77073313731?text=$](https://wa.me/77073313731?text=$){msg}`;
     }
 
-    // 5. Магнитная кнопка действия (Emil Kowalski Physics)
-    const btn = document.querySelector('.magnetic');
-    if (btn) {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
-        const y = (e.clientY - rect.top - rect.height / 2) * 0.25;
-        gsap.to(btn, { x: x, y: y, duration: 0.2, ease: 'power2.out' });
+    // 5. Магнитное притяжение кнопки вызова
+    const pullBtn = document.querySelector('.magnetic-pull');
+    if (pullBtn) {
+      pullBtn.addEventListener('mousemove', (e) => {
+        const r = pullBtn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.22;
+        const y = (e.clientY - r.top - r.height / 2) * 0.22;
+        gsap.to(pullBtn, { x: x, y: y, duration: 0.2, ease: 'power2.out' });
       });
-      btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.3, ease: 'power2.out' });
+      pullBtn.addEventListener('mouseleave', () => {
+        gsap.to(pullBtn, { x: 0, y: 0, duration: 0.3, ease: 'power2.out' });
       });
     }
   </script>
