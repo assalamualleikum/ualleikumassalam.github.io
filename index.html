@@ -3,193 +3,543 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Local Service</title>
+  <title>Максим. Архитектура тишины и цифровых форм</title>
+  
+  <!-- Шрифты: благородный сериф + чистый технологичный гротеск -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- GSAP для кинетики -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
   <style>
     :root {
-      --bg-main: #0a0a0b;
-      --bg-card: #141415;
-      --text-main: #ffffff;
-      --text-muted: #a1a1aa;
-      --accent: #ffffff;
-      --border: rgba(255,255,255,0.08);
-      --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg-deep: #0a0b0e;
+      --bg-card: rgba(18, 20, 26, 0.7);
+      --bg-card-hover: rgba(26, 29, 38, 0.85);
+      
+      --text-pure: #f4f5f8;
+      --text-muted: #8e95a5;
+      --text-dim: #545a69;
+
+      /* Лавандовый отблеск и хвойная сталь */
+      --accent-lavender: #b8a9c9;
+      --accent-lavender-glow: rgba(184, 169, 201, 0.15);
+      --accent-frost: #d4e0eb;
+      
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-focus: rgba(184, 169, 201, 0.35);
+
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: var(--font-stack);
-      line-height: 1.5;
+      background-color: var(--bg-deep);
+      color: var(--text-pure);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+      min-height: 100vh;
     }
 
-    .container { max-width: 640px; margin: 0 auto; padding: 24px; }
-
-    /* Hero Section */
-    .hero { margin-top: 60px; margin-bottom: 48px; }
-    
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    /* Мягкий рассеянный свет за курсором */
+    .spotlight {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-lavender-glow) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
     }
 
-    .title {
-      font-size: 36px;
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-    }
-
-    /* Gallery Grid */
-    .gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 48px;
-    }
-
-    .gallery img {
+    /* Фоновый шум для снижения цифровой пластмассовости */
+    .grain-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-    .gallery img:first-child { grid-column: span 2; height: 260px; }
-
-    /* Services Bento */
-    .services-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 16px;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 2;
     }
 
-    .bento {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 48px;
+    .wrapper {
+      position: relative;
+      z-index: 3;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
 
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 24px;
-      border-radius: 16px;
+    /* Навигация */
+    .nav-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .card-info h3 { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
-    .card-info p { font-size: 14px; color: var(--text-muted); }
-    .card-price { font-size: 16px; font-weight: 600; }
-
-    /* CTA Button */
-    .cta-container {
-      position: sticky;
-      bottom: 24px;
-      z-index: 10;
+    .brand-mark {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-lavender);
     }
 
-    .btn {
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .status-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #55c48b;
+      box-shadow: 0 0 8px #55c48b;
+    }
+
+    /* Герой-секция */
+    .hero {
+      padding: 110px 0 80px;
+      text-align: left;
+    }
+
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-lavender);
       display: block;
-      width: 100%;
-      padding: 18px;
-      background: var(--accent);
-      color: #000;
-      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.1;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+      color: var(--text-pure);
+    }
+
+    .hero-lead {
+      font-size: clamp(17px, 2.2vw, 21px);
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-solid {
+      background: var(--text-pure);
+      color: var(--bg-deep);
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
       text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s var(--ease-smooth), background 0.2s ease;
+      will-change: transform;
+    }
+
+    .btn-solid:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-decoration: none;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text-pure);
+      border-color: var(--accent-lavender);
+    }
+
+    /* Блоки манифеста (Кто, Что, Почему) */
+    .manifesto-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .grid-three {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .block-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .block-card:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-card-hover);
+    }
+
+    .card-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-lavender);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .card-heading {
+      font-size: 19px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      line-height: 1.3;
+      color: var(--text-pure);
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Сетка тарифов (За сколько и Когда) */
+    .pricing-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .tier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 40px 32px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tier-card.featured {
+      border-color: rgba(184, 169, 201, 0.4);
+      background: linear-gradient(180deg, rgba(28, 31, 41, 0.8) 0%, rgba(18, 20, 26, 0.8) 100%);
+    }
+
+    .tier-name {
       font-size: 16px;
       font-weight: 600;
-      border-radius: 12px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+      margin-bottom: 8px;
+      color: var(--text-pure);
     }
 
-    .btn:active { transform: scale(0.98); }
-
-    /* Simple Fade In Animation */
-    .fade-in {
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-      transform: translateY(10px);
+    .tier-cost {
+      font-size: 32px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--accent-lavender);
+      margin-bottom: 16px;
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
+    .tier-timeline {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
     }
-    
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
+
+    .tier-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .tier-features li {
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tier-features li::before {
+      content: '•';
+      color: var(--accent-lavender);
+      font-size: 18px;
+    }
+
+    /* Футер */
+    .site-footer {
+      padding: 60px 0 80px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .footer-telegram {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .footer-telegram:hover {
+      color: var(--accent-lavender);
+      border-color: var(--accent-lavender);
+    }
+
+    /* Адаптив */
+    @media (max-width: 820px) {
+      .grid-three, .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 70px 0 50px;
+      }
+      .site-footer {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <section class="hero fade-in">
-      <!-- Название компании клиента -->
-      <span class="badge">Гарантия 2 года</span>
-      <h1 class="title">Замена автостекол<br>и премиум детейлинг.</h1>
-      <p class="subtitle">Используем только оригинальные материалы. Работаем на результат, а не на поток.</p>
+  <!-- Рассеянное световое пятно за мышью -->
+  <div class="spotlight" id="spotlight"></div>
+  <div class="grain-overlay"></div>
+
+  <div class="wrapper">
+    <!-- Навигация -->
+    <header class="nav-bar">
+      <div class="brand-mark">Семиградов. Архитектура тишины.</div>
+      <div class="nav-status">
+        <span class="status-pulse"></span>
+        <span>Принимаю задачи на ноябрь</span>
+      </div>
+    </header>
+
+    <!-- Главный экран: Кто и Что -->
+    <section class="hero">
+      <span class="kicker">Автономное цифровое производство</span>
+      <h1 class="hero-title">Веб-формы без шума.<br>Тактильные, быстрые, живые.</h1>
+      <p class="hero-lead">
+        Я создаю минималистичные цифровые витрины и интерактивные манифесты для тех, кто устал от шаблонной пластмассы. Никаких раздутых совещаний и лишних строк кода. Только плотная материя, выверенный свет и прямое действие.
+      </p>
+      <div class="hero-actions">
+        <a href="https://t.me/your_telegram" class="btn-solid magnetic">Обсудить проект в Telegram</a>
+        <a href="#details" class="btn-ghost">Изучить принципы</a>
+      </div>
     </section>
 
-    <!-- Сюда вставляются фото клиента из 2ГИС -->
-    <section class="gallery fade-in delay-1">
-      <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=600&q=80" alt="Работа 1">
-      <img src="https://images.unsplash.com/photo-1550503193-4ee265538e14?auto=format&fit=crop&w=300&q=80" alt="Работа 2">
-      <img src="https://images.unsplash.com/photo-1600661653561-629509216228?auto=format&fit=crop&w=300&q=80" alt="Работа 3">
-    </section>
+    <!-- Смысловые блоки: Кто, Что, Почему -->
+    <section class="manifesto-section" id="details">
+      <div class="grid-three">
+        <div class="block-card">
+          <div>
+            <div class="card-tag">Кто</div>
+            <h3 class="card-heading">Человек с живым опытом</h3>
+            <p class="card-text">
+              За моими плечами руководство людьми в полевых условиях и физическая работа руками. Я понимаю цену настоящей материи, поэтому строю сайты как добротные монолиты, где каждый элемент держит нагрузку.
+            </p>
+          </div>
+        </div>
 
-    <section class="services fade-in delay-2">
-      <h2 class="services-title">Наши услуги</h2>
-      <div class="bento">
-        <div class="card">
-          <div class="card-info">
-            <h3>Замена лобового стекла</h3>
-            <p>Установка за 2 часа с гарантией</p>
+        <div class="block-card">
+          <div>
+            <div class="card-tag">Что</div>
+            <h3 class="card-heading">Цифровые артефакты</h3>
+            <p class="card-text">
+              Одностраничные витрины, презентации мастерских, посадочные страницы со сложной микрофизикой и строгой типографикой. Открываются за мгновение на любом телефоне и не требуют ежемесячной платы за конструкторы.
+            </p>
           </div>
-          <div class="card-price">от 15 000 ₸</div>
         </div>
-        <div class="card">
-          <div class="card-info">
-            <h3>Ремонт сколов</h3>
-            <p>Остановка трещин фотополимером</p>
+
+        <div class="block-card">
+          <div>
+            <div class="card-tag">Почему</div>
+            <h3 class="card-heading">Очищение от мусора</h3>
+            <p class="card-text">
+              В современном интернете слишком много кислотных цветов, навязчивых всплывающих окон и кричащих призывов. Спокойный, уверенный минимализм продает в разы убедительнее любой суеты.
+            </p>
           </div>
-          <div class="card-price">от 3 000 ₸</div>
-        </div>
-        <div class="card">
-          <div class="card-info">
-            <h3>Полировка кузова</h3>
-            <p>Глубокая восстановительная полировка</p>
-          </div>
-          <div class="card-price">от 45 000 ₸</div>
         </div>
       </div>
     </section>
 
-    <!-- Ссылка на WhatsApp клиента -->
-    <div class="cta-container fade-in delay-2">
-      <a href="https://wa.me/77000000000?text=Здравствуйте,%20хочу%20узнать%20стоимость" class="btn">Написать в WhatsApp</a>
-    </div>
+    <!-- Прозрачные условия: Когда и За сколько -->
+    <section class="pricing-section">
+      <div class="section-header">
+        <span class="kicker">Прозрачные договоренности</span>
+        <h2 class="section-headline">Сроки и стоимость</h2>
+        <p class="section-desc">Никаких скрытых платежей, почасовых накруток или бесконечных переделок.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Тариф 1 -->
+        <div class="tier-card">
+          <div>
+            <div class="tier-name">Автономная витрина</div>
+            <div class="tier-cost">35 000 ₸</div>
+            <div class="tier-timeline">Срок выдачи: 48 часов</div>
+            <ul class="tier-features">
+              <li>Фокус на одной услуге или флагманском продукте</li>
+              <li>Темная или светлая эстетика под вашу нишу</li>
+              <li>Прямая интеграция кнопки заказа в WhatsApp или Telegram</li>
+              <li>Развертывание на бесплатном высокоскоростном хостинге</li>
+              <li>Нулевые расходы на обслуживание в будущем</li>
+            </ul>
+          </div>
+          <a href="https://t.me/your_telegram" class="btn-ghost" style="text-align: center;">Выбрать витрину</a>
+        </div>
+
+        <!-- Тариф 2 -->
+        <div class="tier-card featured">
+          <div>
+            <div class="tier-name">Интерактивный монолит</div>
+            <div class="tier-cost">85 000 ₸</div>
+            <div class="tier-timeline">Срок выдачи: 4-5 дней</div>
+            <ul class="tier-features">
+              <li>Многослойный кинетический сценарий на GSAP</li>
+              <li>Сложная Bento-сетка и микро-анимации слоев</li>
+              <li>Премиальная editorial-типографика</li>
+              <li>Форма обратной связи с валидацией</li>
+              <li>Полная адаптация под любые мобильные экраны</li>
+            </ul>
+          </div>
+          <a href="https://t.me/your_telegram" class="btn-solid magnetic" style="text-align: center;">Заказать монолит</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="site-footer">
+      <div>© 2026 Максим Семиградов. Сделано вручную в тишине.</div>
+      <a href="https://t.me/your_telegram" class="footer-telegram">Прямая связь в Telegram</a>
+    </footer>
   </div>
 
+  <script>
+    // 1. Интерактивный свет за курсором мыши
+    const spotlight = document.getElementById('spotlight');
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(spotlight, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+    });
+
+    // 2. Магнитная физика кнопок (Emil Kowalski Physics)
+    const magneticElements = document.querySelectorAll('.magnetic');
+    magneticElements.forEach((el) => {
+      const xTo = gsap.quickTo(el, 'x', { duration: 0.3, ease: 'power2.out' });
+      const yTo = gsap.quickTo(el, 'y', { duration: 0.3, ease: 'power2.out' });
+
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+        xTo(x);
+        yTo(y);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        xTo(0);
+        yTo(0);
+      });
+    });
+
+    // 3. Мягкое появление блоков при загрузке (Jakub Krehel kinetics)
+    gsap.from('.hero > *', {
+      opacity: 0,
+      y: 20,
+      filter: 'blur(6px)',
+      stagger: 0.15,
+      duration: 1,
+      ease: 'power3.out'
+    });
+  </script>
 </body>
 </html>
