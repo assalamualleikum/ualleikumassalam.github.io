@@ -3,367 +3,589 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ворота Болат. Кованые ворота, двери и навесы в Таразе</title>
+  <title>Цех Болат — Монументальная ковка и металлоконструкции</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-dark: #090a0d;
-      --bg-card: rgba(18, 20, 26, 0.85);
-      --bg-card-hover: rgba(26, 29, 38, 0.95);
+      --bg: #090a0d;
+      --surface: #111318;
+      --surface-elevated: #181b22;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(212, 175, 55, 0.4);
       
-      --text-main: #f5f6f9;
-      --text-muted: #9aa1b2;
-      --text-dim: #5c6270;
-
-      /* Оттенок кованого металла и благородной латуни */
-      --accent-brass: #c5a880;
-      --accent-brass-glow: rgba(197, 168, 128, 0.12);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(197, 168, 128, 0.4);
-
-      --font-heading: 'Cinzel', serif;
-      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --text: #f0f2f5;
+      --text-muted: #8b92a0;
+      --text-dim: #505664;
+      
+      --gold: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.15);
+      --steel: #7a8291;
+      
+      --font-display: 'Cinzel', Georgia, serif;
+      --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: 90px;
+      padding-bottom: 110px;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 620px;
+    .ambient {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 450px;
+      background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 24px 20px;
+      padding: 0 20px;
     }
 
-    /* Шапка */
-    .header {
-      padding: 36px 0 24px;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 32px;
+    /* Верхняя панель */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 0 20px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .kicker {
+    .brand-mark {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .geo-pill {
       font-family: var(--font-mono);
       font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .geo-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* Главный экран */
+    .hero {
+      padding: 44px 0 32px;
+    }
+
+    .hero-pre {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent-brass);
-      display: block;
+      color: var(--steel);
       margin-bottom: 12px;
+      display: block;
     }
 
-    .title {
-      font-family: var(--font-heading);
-      font-size: clamp(30px, 6vw, 42px);
-      line-height: 1.15;
-      font-weight: 700;
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 6.5vw, 48px);
+      line-height: 1.1;
+      font-weight: 800;
       letter-spacing: -0.01em;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    .subtitle {
+    .hero-desc {
       font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
-    /* Гарантийные метки */
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 24px 0 32px;
+    /* Монументальные характеристики */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 28px 0 36px;
     }
 
-    .badge-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
+    .spec-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .spec-num {
       font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    .spec-label {
+      font-size: 11px;
       color: var(--text-muted);
-    }
-
-    /* Витрина работ */
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 18px;
+      text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 16px;
-      color: var(--text-main);
     }
 
-    .gallery-grid {
+    /* Интерактивный калькулятор ориентировочной цены */
+    .calc-card {
+      background: linear-gradient(180deg, var(--surface-elevated) 0%, var(--surface) 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    .calc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 18px;
+    }
+
+    .calc-title {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .calc-type-switch {
+      display: flex;
+      gap: 6px;
+      background: rgba(0,0,0,0.3);
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .type-btn {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .type-btn.active {
+      background: var(--surface);
+      color: var(--gold);
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .calc-row {
+      margin-bottom: 18px;
+    }
+
+    .calc-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .calc-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.1);
+      outline: none;
+      -webkit-appearance: none;
+      accent-color: var(--gold);
+    }
+
+    .calc-result {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .result-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .result-val {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* Галерея работ */
+    .section-head {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .gallery-masonry {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 36px;
     }
 
-    .gallery-item {
+    .img-box {
       position: relative;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      border: 1px solid var(--border-subtle);
-      background: #14151a;
-      height: 200px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      height: 220px;
     }
 
-    .gallery-item.large {
+    .img-box.span-2 {
       grid-column: span 2;
-      height: 260px;
+      height: 280px;
     }
 
-    .gallery-item img {
+    .img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      filter: contrast(1.05);
       transition: transform 0.4s ease;
     }
 
-    .gallery-item:hover img {
-      transform: scale(1.03);
+    .img-box:hover img {
+      transform: scale(1.04);
     }
 
-    /* Блок услуг и цен */
-    .services-stack {
+    .img-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(9, 10, 13, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    /* Инженерные стандарты */
+    .standards-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 36px;
     }
 
-    .service-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      padding: 20px;
-      border-radius: 12px;
+    .standard-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      border-radius: 10px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 16px;
-    }
-
-    .service-info h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .service-info p {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .service-price {
-      text-align: right;
-      font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--accent-brass);
-      white-space: nowrap;
-    }
-
-    /* Этапы работы */
-    .steps-block {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 36px;
-    }
-
-    .steps-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
       gap: 14px;
-      margin-top: 14px;
     }
 
-    .steps-list li {
+    .std-bullet {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .std-text h4 {
       font-size: 14px;
-      color: var(--text-muted);
-      display: flex;
-      gap: 12px;
-      align-items: baseline;
-    }
-
-    .step-num {
-      font-family: var(--font-mono);
-      color: var(--accent-brass);
       font-weight: 600;
-      font-size: 12px;
+      margin-bottom: 2px;
     }
 
-    /* Нижняя прилипающая плашка связи */
-    .cta-fixed {
+    .std-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Нижняя плашка связи */
+    .dock {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(9, 10, 13, 0.92);
-      backdrop-filter: blur(14px);
-      border-top: 1px solid var(--border-subtle);
-      padding: 16px 20px;
-      z-index: 50;
+      background: rgba(9, 10, 13, 0.95);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border);
+      padding: 14px 20px;
+      z-index: 99;
     }
 
-    .cta-inner {
-      max-width: 620px;
+    .dock-content {
+      max-width: 680px;
       margin: 0 auto;
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .btn-wa {
-      flex: 2;
-      background: #25d366;
-      color: #050608;
-      font-size: 15px;
-      font-weight: 600;
-      text-align: center;
-      padding: 15px;
-      border-radius: 10px;
+    .dock-btn-main {
+      flex: 3;
+      background: var(--gold);
+      color: #050607;
       text-decoration: none;
-      transition: opacity 0.2s ease, transform 0.1s ease;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
     }
 
-    .btn-wa:active {
-      transform: scale(0.98);
-      opacity: 0.9;
+    .dock-btn-main:hover {
+      background: #dfbc46;
     }
 
-    .btn-call {
+    .dock-btn-sec {
       flex: 1;
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      font-size: 15px;
-      font-weight: 500;
-      text-align: center;
-      padding: 15px;
-      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
       text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header class="header">
-      <span class="kicker">Тараз. Цех художественной ковки</span>
-      <h1 class="title">Ворота Болат</h1>
-      <p class="subtitle">
-        Изготовление кованых ворот, бронированных входных дверей и навесов любой сложности. Ручная работа, плотный металл и честная гарантия.
+  <div class="ambient"></div>
+
+  <div class="shell">
+    <div class="top-bar">
+      <div class="brand-mark">Кузнечный Цех Болат</div>
+      <div class="geo-pill">
+        <span class="geo-dot"></span>
+        <span>Тараз • Замер день в день</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <span class="hero-pre">Мастерская художественной ковки</span>
+      <h1 class="hero-h1">Металл на поколения.<br>Ворота. Двери. Навесы.</h1>
+      <p class="hero-desc">
+        Работаем с толстостенной сталью и авторской ручной ковкой. Создаем конструкции, которые выдерживают любые ветра и сохраняют геометрию через десятки лет.
       </p>
 
-      <div class="badges">
-        <span class="badge-item">Гарантия 12 месяцев</span>
-        <span class="badge-item">Замер и 3D-дизайн бесплатно</span>
-        <span class="badge-item">Доставка и установка</span>
-      </div>
-    </header>
-
-    <!-- Фото объектов -->
-    <section>
-      <h2 class="section-title">Примеры готовых объектов</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item large">
-          <!-- Реальное фото работ цеха Болата из 2ГИС -->
-          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="Кованые ворота ручной работы">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-num">12 мес.</div>
+          <div class="spec-label">Гарантия в договоре</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80" alt="Монтаж и подгонка">
+        <div class="spec-item">
+          <div class="spec-num">0 ₸</div>
+          <div class="spec-label">Замер и 3D-эскиз</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80" alt="Металлоконструкции и швы">
+        <div class="spec-item">
+          <div class="spec-num">от 3 дней</div>
+          <div class="spec-label">Срок монтажа</div>
         </div>
       </div>
     </section>
 
-    <!-- Цены и услуги -->
+    <!-- Интерактивный расчет -->
+    <div class="calc-card">
+      <div class="calc-header">
+        <span class="calc-title">Калькулятор ориентира</span>
+        <span style="font-size: 11px; color: var(--gold); font-family: var(--font-mono);">точный расчет на замере</span>
+      </div>
+
+      <div class="calc-type-switch">
+        <button class="type-btn active" onclick="setType('gates', 250000, 'Ворота распашные')">Ворота</button>
+        <button class="type-btn" onclick="setType('doors', 180000, 'Входная дверь')">Двери</button>
+        <button class="type-btn" onclick="setType('canopy', 20000, 'Навес во двор')">Навесы (кв.м)</button>
+      </div>
+
+      <div class="calc-row">
+        <div class="calc-label-row">
+          <span>Сложность ковки / Размер:</span>
+          <span id="scale-label" style="font-weight: 600; color: var(--text);">Стандартная ковка</span>
+        </div>
+        <input type="range" min="1" max="4" value="1" class="calc-slider" id="calcRange" oninput="updatePrice()">
+      </div>
+
+      <div class="calc-result">
+        <div>
+          <div class="result-label">Примерная стоимость:</div>
+          <div style="font-size: 11px; color: var(--text-muted);">включая замер, покраску и доставку</div>
+        </div>
+        <div class="result-val" id="priceDisplay">от 250 000 ₸</div>
+      </div>
+    </div>
+
+    <!-- Галерея с подписями -->
     <section>
-      <h2 class="section-title">Ориентировочная стоимость</h2>
-      <div class="services-stack">
-        <div class="service-card">
-          <div class="service-info">
-            <h3>Кованые распашные ворота</h3>
-            <p>С элементами ручной ковки и покраской</p>
-          </div>
-          <div class="service-price">от 250 000 ₸</div>
-        </div>
+      <div class="section-head">
+        <span>Фактура и готовые работы</span>
+        <span style="font-size: 12px; color: var(--steel); font-family: var(--font-mono);">Тараз и пригород</span>
+      </div>
 
-        <div class="service-card">
-          <div class="service-info">
-            <h3>Входные кованые двери</h3>
-            <p>Утепленные, с надежной фурнитурой</p>
-          </div>
-          <div class="service-price">от 180 000 ₸</div>
+      <div class="gallery-masonry">
+        <div class="img-box span-2">
+          <!-- Замените на ./vorota_1.jpg когда зальете в репозиторий -->
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Кованые ворота ручной работы">
+          <div class="img-tag">Распашные ворота с патиной</div>
         </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <h3>Навесы для двора и авто</h3>
-            <p>Поликарбонат или профлист, усиленная ферма</p>
-          </div>
-          <div class="service-price">от 18 000 ₸/м²</div>
+        <div class="img-box">
+          <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=500&q=80" alt="Арочный навес">
+          <div class="img-tag">Ферма под поликарбонат</div>
         </div>
-
-        <div class="service-card">
-          <div class="service-info">
-            <h3>Премиальные откатные ворота</h3>
-            <p>Под автоматику, индивидуальный рисунок</p>
-          </div>
-          <div class="service-price">до 2 000 000 ₸</div>
+        <div class="img-box">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80" alt="Входная группа">
+          <div class="img-tag">Кованая бронедверь</div>
         </div>
       </div>
     </section>
 
-    <!-- Порядок заказа -->
-    <section class="steps-block">
-      <h2 class="section-title" style="margin-bottom: 0;">Как проходит работа</h2>
-      <ul class="steps-list">
-        <li>
-          <span class="step-num">01.</span>
-          <span>Выезд мастера на замер по Таразу и согласование эскиза.</span>
-        </li>
-        <li>
-          <span class="step-num">02.</span>
-          <span>Заключение договора с фиксированной сметой без доплат.</span>
-        </li>
-        <li>
-          <span class="step-num">03.</span>
-          <span>Изготовление в цеху, доставка, монтаж и гарантия 12 месяцев.</span>
-        </li>
-      </ul>
+    <!-- Инженерные принципы -->
+    <section>
+      <div class="section-head">
+        <span>Почему заказывают у Болата</span>
+      </div>
+
+      <div class="standards-list">
+        <div class="standard-row">
+          <div class="std-bullet"></div>
+          <div class="std-text">
+            <h4>Антикоррозийная подготовка</h4>
+            <p>Двухслойное грунтование и молотковая кузнечная краска. Металл не цветет после первой зимы.</p>
+          </div>
+        </div>
+        <div class="standard-row">
+          <div class="std-bullet"></div>
+          <div class="std-text">
+            <h4>Усиленные петли и засовы</h4>
+            <p>Рассчитаны на массивный вес створок. Никакого провисания и скрипа через годы эксплуатации.</p>
+          </div>
+        </div>
+        <div class="standard-row">
+          <div class="std-bullet"></div>
+          <div class="std-text">
+            <h4>Фиксированная цена в смете</h4>
+            <p>Сумма, названная на замере, прописывается в договоре и не увеличивается в процессе монтажа.</p>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 
-  <!-- Прилипающие кнопки связи -->
-  <div class="cta-fixed">
-    <div class="cta-inner">
-      <a href="https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20ворот%20и%20вызвать%20на%20замер" class="btn-wa" target="_blank" rel="noopener">
-        Написать в WhatsApp
+  <!-- Прилипающий док -->
+  <div class="dock">
+    <div class="dock-content">
+      <a href="https://wa.me/77073313731?text=Здравствуйте,%20Болат!%20Хочу%20узнать%20стоимость%20и%20вызвать%20вас%20на%20замер" id="waLink" target="_blank" rel="noopener" class="dock-btn-main">
+        Вызвать мастера на замер (WhatsApp)
       </a>
-      <a href="tel:+77073313731" class="btn-call">
-        Позвонить
+      <a href="tel:+77073313731" class="dock-btn-sec">
+        Звонок
       </a>
     </div>
   </div>
 
+  <script>
+    let currentBase = 250000;
+    let currentTypeName = 'Ворота распашные';
+
+    const scales = {
+      gates: [
+        { label: 'Стандартная ковка (эконом)', mult: 1, text: 'от 250 000 ₸' },
+        { label: 'Средняя плотность узора', mult: 1.8, text: 'от 450 000 ₸' },
+        { label: 'Густой кованый орнамент', mult: 3.2, text: 'от 800 000 ₸' },
+        { label: 'Премиум откатные с автоматикой', mult: 6, text: 'до 2 000 000 ₸' }
+      ],
+      doors: [
+        { label: 'Одностворчатая с элементами ковки', mult: 1, text: 'от 180 000 ₸' },
+        { label: 'Утепленная со стеклопакетом и решеткой', mult: 1.5, text: 'от 270 000 ₸' },
+        { label: 'Двустворчатая парадная', mult: 2.3, text: 'от 420 000 ₸' },
+        { label: 'Элитная бронедверь авторской работы', mult: 4, text: 'от 750 000 ₸' }
+      ],
+      canopy: [
+        { label: 'Навес односкатный (до 20 кв.м)', mult: 1, text: 'от 18 000 ₸/м²' },
+        { label: 'Арочный навес под поликарбонат', mult: 1.25, text: 'от 22 500 ₸/м²' },
+        { label: 'Сложная двухскатная ферма во двор', mult: 1.6, text: 'от 28 000 ₸/м²' },
+        { label: 'Капитальный навес с элементами ковки', mult: 2.2, text: 'от 40 000 ₸/м²' }
+      ]
+    };
+
+    let activeCategory = 'gates';
+
+    function setType(cat, base, name) {
+      activeCategory = cat;
+      currentBase = base;
+      currentTypeName = name;
+      
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      document.getElementById('calcRange').value = 1;
+      updatePrice();
+    }
+
+    function updatePrice() {
+      const step = parseInt(document.getElementById('calcRange').value) - 1;
+      const data = scales[activeCategory][step];
+      
+      document.getElementById('scale-label').innerText = data.label;
+      document.getElementById('priceDisplay').innerText = data.text;
+
+      // Динамически обновляем текст для WhatsApp
+      const waText = encodeURIComponent(`Здравствуйте, Болат! Присмотрел на сайте: ${currentTypeName} (${data.label}). Ориентир по цене: ${data.text}. Когда удобно сделать замер?`);
+      document.getElementById('waLink').href = `https://wa.me/77073313731?text=${waText}`;
+    }
+  </script>
 </body>
 </html>
