@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентация: Онлайн-визитка для мастера</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .slider-container {
+            width: 380px;
+            height: 480px;
+            background: #1e293b;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+            border: 1px solid #334155;
+        }
+        .slide {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        .slide.active {
+            display: flex;
+        }
+        .slide-number {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        h2 {
+            font-size: 22px;
+            margin: 0 0 15px 0;
+            color: #38bdf8;
+            line-height: 1.3;
+        }
+        p, li {
+            font-size: 15px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin: 0 0 10px 0;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        .highlight {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid #38bdf8;
+            padding: 10px 12px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #0ea5e9;
+        }
+        button:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+    <div class="slides">
+        <!-- Слайд 1 -->
+        <div class="slide active">
+            <div class="slide-number">Слайд 1 из 8</div>
+            <h2>Почему крутые мастера зарабатывают меньше, чем заслуживают?</h2>
+            <p>И как 1 простая ссылка решает проблему слива клиентов раз и навсегда.</p>
+            <div class="highlight">Листай карусель, чтобы узнать секрет конверсии 👇</div>
+        </div>
+        <!-- Слайд 2 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 2 из 8</div>
+            <h2>Твой рабочий день выглядит так?</h2>
+            <ul>
+                <li>10 вопросов в Директ: <em>«А сколько стоит?»</em></li>
+                <li>Час переписок, а в конце: <em>«Спасибо, я подумаю»</em></li>
+                <li>Портфолио зарыто в хаотичных постах и сторис</li>
+            </ul>
+        </div>
+        <!-- Слайд 3 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 3 из 8</div>
+            <h2>Главная ловушка соцсетей</h2>
+            <p>Пока ты работаешь руками и занят делом, клиент не хочет ждать ответа 2 часа.</p>
+            <p>Если за 30 секунд он не понял цену и примеры работ — он уходит к конкуренту.</p>
+        </div>
+        <!-- Слайд 4 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 4 из 8</div>
+            <h2>Твой личный менеджер 24/7</h2>
+            <p><strong>Персональная онлайн-визитка.</strong></p>
+            <p>Не тяжелый сайт за космические деньги, а легкая мобильная страница под одну главную задачу — <strong>записать клиента в 1 клик</strong>.</p>
+        </div>
+        <!-- Слайд 5 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 5 из 8</div>
+            <h2>Анатомия визитки топ-мастера:</h2>
+            <ul>
+                <li>📸 Живое фото и статус</li>
+                <li>💎 Топ-3 кейса «До / После»</li>
+                <li>💳 Прозрачный прайс без лишней воды</li>
+                <li>🟢 Кнопка связи с WhatsApp/Telegram</li>
+            </ul>
+        </div>
+        <!-- Слайд 6 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 6 из 8</div>
+            <h2>Миф: «Сайт — это дорого и абонентка»</h2>
+            <p><strong>А вот и нет.</strong> Современная визитка создается один раз:</p>
+            <ul>
+                <li>❌ Без ежемесячной платы за хостинг</li>
+                <li>✅ Запустил — и работает годами</li>
+                <li>✅ Нужен новый блок? Добавим в пару кликов</li>
+            </ul>
+        </div>
+        <!-- Слайд 7 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 7 из 8</div>
+            <h2>Что меняется после запуска?</h2>
+            <div class="highlight">
+                🚀 До +40% доходимости до записи<br>
+                ⏳ Минус 2 часа пустых переписок в день<br>
+                ⭐ Статус профи, у которого всё четко
+            </div>
+        </div>
+        <!-- Слайд 8 -->
+        <div class="slide">
+            <div class="slide-number">Слайд 8 из 8</div>
+            <h2>Забери чек-лист бесплатно!</h2>
+            <p><strong>«10 элементов идеальной визитки мастера»</strong></p>
+            <div class="highlight">Напиши слово <strong>«ВИЗИТКА»</strong> в комментарии или в Директ — пришлю в течение 2 минут 📩</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)" disabled>Назад</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Далее ➔</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    function changeSlide(direction) {
+        slides[currentSlide].classList.remove('active');
+        currentSlide += direction;
+        slides[currentSlide].classList.add('active');
+
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        if(currentSlide === slides.length - 1) {
+            nextBtn.innerText = 'Финиш ✨';
+        } else {
+            nextBtn.innerText = 'Далее ➔';
+        }
+    }
+</script>
+
+</body>
+</html>
