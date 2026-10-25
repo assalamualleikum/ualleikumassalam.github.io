@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>МАСТЕР ПЛАСТ - Оконные системы Тараз</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+          colors: {
+            brand: { 500: '#3b82f6', 600: '#2563eb', 900: '#1e3a8a' },
+            glass: 'rgba(255, 255, 255, 0.03)',
+            glassBorder: 'rgba(255, 255, 255, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #09090b; color: #f4f4f5; overflow-x: hidden; }
+    .glass-panel { background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--glassBorder); }
+    .input-glass { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); color: white; transition: border-color 0.2s; }
+    .input-glass:focus { outline: none; border-color: #3b82f6; }
+    
+    /* Кастомный чекбокс */
+    .checkbox-custom { appearance: none; width: 20px; height: 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; background: rgba(0,0,0,0.4); cursor: pointer; position: relative; }
+    .checkbox-custom:checked { background: #3b82f6; border-color: #3b82f6; }
+    .checkbox-custom:checked::after { content: ''; position: absolute; left: 6px; top: 2px; width: 6px; height: 12px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+
+    /* Анимация переключения языка */
+    .lang-btn.active { color: white; font-weight: 700; border-bottom: 2px solid #3b82f6; }
+    .lang-btn { color: #a1a1aa; font-weight: 500; padding-bottom: 2px; transition: color 0.2s; }
+
+    /* Окно превью */
+    .frame-part { transition: fill 0.3s ease; }
+    .glass-part { fill: url(#glassGradient); }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-[100dvh] flex flex-col relative">
+
+  <!-- Декоративные фоновые элементы (CSS) -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-brand-900/20 blur-[120px]"></div>
+    <div class="absolute bottom-[-20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-indigo-900/20 blur-[100px]"></div>
+  </div>
+
+  <!-- Навигация -->
+  <header class="fixed top-0 w-full z-50 glass-panel border-t-0 border-x-0 border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 flex items-center justify-between py-4">
+      <div class="flex items-center gap-3">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="9" y1="21" x2="9" y2="9"></line>
+        </svg>
+        <span class="font-bold text-lg tracking-wider">МАСТЕР ПЛАСТ</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="flex gap-3 text-sm">
+          <button id="btn-ru" class="lang-btn active" onclick="switchLang('ru')">RU</button>
+          <button id="btn-kz" class="lang-btn" onclick="switchLang('kz')">KZ</button>
+        </div>
+        <a id="nav-wa" href="#" target="_blank" class="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg text-sm font-semibold transition-transform active:scale-95 border border-zinc-700">
+          <span id="nav-contact-text">Написать нам</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Главный экран -->
+  <section class="relative z-10 pt-32 pb-20 px-4">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel border-brand-500/30 text-brand-500 text-xs font-bold uppercase tracking-widest mb-6">
+          <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+          <span id="hero-badge">Заводское производство в Таразе - Опыт 10 лет</span>
+        </div>
+        <h1 id="hero-title" class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6 tracking-tight">
+          Пластиковые окна, балконы и витражи в рассрочку
+        </h1>
+        <p id="hero-subtitle" class="text-zinc-400 text-lg md:text-xl mb-10 max-w-xl leading-relaxed">
+          5-камерные профили, надежная фурнитура, москитная сетка при заказе и бесплатный выезд замерщика по Таразу.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 mb-12">
+          <a href="#calculator" id="btn-calc-scroll" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-center transition-all active:scale-95 shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+            Рассчитать стоимость
+          </a>
+          <a id="hero-wa" href="#" target="_blank" class="px-8 py-4 glass-panel hover:bg-white/10 text-white rounded-xl font-bold text-center transition-all active:scale-95 border border-zinc-700">
+            WhatsApp (+)
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="glass-panel p-4 rounded-xl border border-zinc-800/50">
+            <div id="feat-1" class="font-bold text-sm text-zinc-200">Рассрочка 0%</div>
+            <div id="feat-1-sub" class="text-xs text-zinc-500 mt-1">Кредит без переплаты</div>
+          </div>
+          <div class="glass-panel p-4 rounded-xl border border-zinc-800/50">
+            <div id="feat-2" class="font-bold text-sm text-zinc-200">Скидки пенсионерам</div>
+            <div id="feat-2-sub" class="text-xs text-zinc-500 mt-1">Особые условия</div>
+          </div>
+          <div class="glass-panel p-4 rounded-xl border border-zinc-800/50">
+            <div id="feat-3" class="font-bold text-sm text-zinc-200">Гарантия до 14 лет</div>
+            <div id="feat-3-sub" class="text-xs text-zinc-500 mt-1">На профиль ПВХ</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Абстрактная CSS/SVG Иллюстрация -->
+      <div class="relative w-full aspect-square max-w-md mx-auto lg:ml-auto">
+        <svg viewBox="0 0 400 400" class="w-full h-full drop-shadow-2xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="glassGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/>
+            </linearGradient>
+            <linearGradient id="frameGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#27272a"/>
+              <stop offset="100%" stop-color="#18181b"/>
+            </linearGradient>
+          </defs>
+          <!-- Внешняя рама -->
+          <rect x="40" y="20" width="320" height="360" rx="4" fill="url(#frameGradient)" stroke="#3f3f46" stroke-width="2"/>
+          <rect x="60" y="40" width="280" height="320" fill="#09090b" stroke="#27272a" stroke-width="4"/>
+          <!-- Импост (перегородка) -->
+          <rect x="190" y="40" width="20" height="320" fill="url(#frameGradient)" stroke="#3f3f46" stroke-width="1"/>
+          <!-- Стекла -->
+          <rect x="65" y="45" width="120" height="310" fill="url(#glassGradient)"/>
+          <rect x="215" y="45" width="120" height="310" fill="url(#glassGradient)"/>
+          <!-- Блики на стекле -->
+          <path d="M 65 250 L 185 100 L 185 140 L 65 290 Z" fill="#ffffff" fill-opacity="0.03"/>
+          <path d="M 215 250 L 335 100 L 335 140 L 215 290 Z" fill="#ffffff" fill-opacity="0.03"/>
+          <!-- Ручка -->
+          <rect x="175" y="180" width="8" height="40" rx="4" fill="#a1a1aa"/>
+          <rect x="183" y="196" width="12" height="8" rx="2" fill="#d4d4d8"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок: Что мы изготавливаем -->
+  <section class="relative z-10 py-20 px-4 bg-zinc-900/50">
+    <div class="max-w-7xl mx-auto">
+      <h2 id="products-title" class="text-3xl md:text-4xl font-bold text-center mb-12">Что мы изготавливаем</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="glass-panel p-6 rounded-2xl text-center hover:bg-white/5 transition-colors">
+          <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 64 64" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round">
+            <rect x="12" y="8" width="40" height="48" rx="2"/>
+            <line x1="32" y1="8" x2="32" y2="56"/>
+            <circle cx="28" cy="32" r="2" fill="#3b82f6"/>
+          </svg>
+          <h3 id="prod-1-title" class="text-lg font-bold mb-2">Окна и двери ПВХ</h3>
+          <p id="prod-1-desc" class="text-sm text-zinc-400">Для частных домов и квартир. Теплоизоляция и защита от шума.</p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl text-center hover:bg-white/5 transition-colors">
+          <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 64 64" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round">
+            <rect x="8" y="16" width="48" height="32" rx="2"/>
+            <line x1="24" y1="16" x2="24" y2="48"/>
+            <line x1="40" y1="16" x2="40" y2="48"/>
+            <rect x="6" y="48" width="52" height="4" fill="#3b82f6"/>
+          </svg>
+          <h3 id="prod-2-title" class="text-lg font-bold mb-2">Остекление балконов</h3>
+          <p id="prod-2-desc" class="text-sm text-zinc-400">Балконы и лоджии под ключ. Расширение полезной площади.</p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl text-center hover:bg-white/5 transition-colors">
+          <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 64 64" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round">
+            <path d="M4 12 L60 12 L60 52 L4 52 Z"/>
+            <path d="M4 24 L60 24 M4 36 L60 36 M18 12 L18 52 M32 12 L32 52 M46 12 L46 52"/>
+          </svg>
+          <h3 id="prod-3-title" class="text-lg font-bold mb-2">Витражи и фасады</h3>
+          <p id="prod-3-desc" class="text-sm text-zinc-400">Сплошное остекление, офисные перегородки и бутики.</p>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl text-center hover:bg-white/5 transition-colors">
+          <svg class="w-16 h-16 mx-auto mb-4" viewBox="0 0 64 64" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linejoin="round">
+            <rect x="12" y="8" width="40" height="48" rx="2"/>
+            <line x1="12" y1="16" x2="52" y2="16"/>
+            <line x1="12" y1="24" x2="52" y2="24"/>
+            <line x1="12" y1="32" x2="52" y2="32"/>
+            <line x1="12" y1="40" x2="52" y2="40"/>
+            <circle cx="32" cy="48" r="2"/>
+          </svg>
+          <h3 id="prod-4-title" class="text-lg font-bold mb-2">Защитные рольставни</h3>
+          <p id="prod-4-desc" class="text-sm text-zinc-400">Металл, порошковое покрытие, взломостойкость P6.</p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Блок: Стандарт и Палитра -->
+  <section class="relative z-10 py-20 px-4">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+      
+      <!-- Характеристики -->
+      <div>
+        <h2 id="specs-title" class="text-3xl md:text-4xl font-bold mb-8">Технический стандарт</h2>
+        <div class="space-y-4">
+          <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+            <span id="spec-1-name" class="text-zinc-300">Камерность профиля</span>
+            <span id="spec-1-val" class="font-mono text-brand-400 font-bold">5 камер</span>
+          </div>
+          <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+            <span id="spec-2-name" class="text-zinc-300">Системная глубина</span>
+            <span id="spec-2-val" class="font-mono text-brand-400 font-bold">60 мм</span>
+          </div>
+          <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+            <span id="spec-3-name" class="text-zinc-300">Толщина стенки</span>
+            <span id="spec-3-val" class="font-mono text-brand-400 font-bold">2.8 мм</span>
+          </div>
+          <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+            <span id="spec-4-name" class="text-zinc-300">Стеклопакет</span>
+            <span id="spec-4-val" class="font-mono text-brand-400 font-bold">24 мм (двойной)</span>
+          </div>
+          <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+            <span id="spec-5-name" class="text-zinc-300">Армирование</span>
+            <span id="spec-5-val" class="font-mono text-brand-400 font-bold">Металл 1.2 мм</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Палитра -->
+      <div class="glass-panel p-8 rounded-3xl text-center relative overflow-hidden">
+        <h3 id="palette-title" class="text-2xl font-bold mb-6">Палитра ламинации</h3>
+        
+        <!-- Интерактивное SVG Окно -->
+        <svg viewBox="0 0 200 200" class="w-48 h-48 mx-auto mb-8 drop-shadow-lg" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect id="preview-outer" class="frame-part" x="20" y="10" width="160" height="180" rx="4" fill="#ffffff" stroke="#3f3f46" stroke-width="1"/>
+          <rect x="35" y="25" width="130" height="150" fill="#09090b"/>
+          <rect id="preview-inner" class="frame-part" x="95" y="25" width="10" height="150" fill="#ffffff" stroke="#3f3f46" stroke-width="0.5"/>
+          <rect x="40" y="30" width="50" height="140" fill="url(#glassGradient)"/>
+          <rect x="110" y="30" width="50" height="140" fill="url(#glassGradient)"/>
+        </svg>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="changeFrameColor('#ffffff')" class="w-10 h-10 rounded-full bg-white border border-zinc-300 ring-2 ring-transparent focus:ring-brand-500 transition-all hover:scale-110" title="Белый"></button>
+          <button onclick="changeFrameColor('#b87333')" class="w-10 h-10 rounded-full border border-zinc-600 ring-2 ring-transparent focus:ring-brand-500 transition-all hover:scale-110" style="background-color: #b87333;" title="Золотой Дуб"></button>
+          <button onclick="changeFrameColor('#8b0000')" class="w-10 h-10 rounded-full border border-zinc-600 ring-2 ring-transparent focus:ring-brand-500 transition-all hover:scale-110" style="background-color: #8b0000;" title="Махагон"></button>
+          <button onclick="changeFrameColor('#5c4033')" class="w-10 h-10 rounded-full border border-zinc-600 ring-2 ring-transparent focus:ring-brand-500 transition-all hover:scale-110" style="background-color: #5c4033;" title="Орех"></button>
+          <button onclick="changeFrameColor('#383e42')" class="w-10 h-10 rounded-full border border-zinc-600 ring-2 ring-transparent focus:ring-brand-500 transition-all hover:scale-110" style="background-color: #383e42;" title="Антрацит"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Интерактивный калькулятор -->
+  <section id="calculator" class="relative z-10 py-20 px-4 bg-zinc-950 border-t border-zinc-900">
+    <div class="max-w-4xl mx-auto glass-panel p-6 sm:p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+      <!-- Декор калькулятора -->
+      <div class="absolute top-0 right-0 w-64 h-64 bg-brand-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+
+      <h2 id="calc-title" class="text-3xl font-bold mb-2">Калькулятор стоимости</h2>
+      <p id="calc-subtitle" class="text-zinc-400 mb-8">Мгновенный расчет и отправка спецификации мастеру</p>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          
+          <div>
+            <label id="lbl-type" class="block text-sm font-semibold text-zinc-300 mb-2">Тип конструкции</label>
+            <select id="c-type" onchange="calculate()" class="w-full px-4 py-3 rounded-xl input-glass appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,<svg%20width=%2224%22%20height=%2224%22%20viewBox=%220%200%24%2024%22%20fill=%22none%22%20xmlns=%22http://www.w3.org/2000/svg%22><path%20d=%22M6%209L12%2015L18%209%22%20stroke=%22%23a1a1aa%22%20stroke-width=%222%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[position:right_1rem_center] pr-10">
+              <option value="40000" id="opt-type-1">2-створчатое окно</option>
+              <option value="45000" id="opt-type-2">3-створчатое окно</option>
+              <option value="50000" id="opt-type-3">Балконный блок (окно + дверь)</option>
+              <option value="60000" id="opt-type-4">Остекление лоджии / витраж</option>
+            </select>
+          </div>
+
+          <div>
+            <label id="lbl-area" class="block text-sm font-semibold text-zinc-300 mb-2">Площадь (м²)</label>
+            <input type="number" id="c-area" value="4" min="1" step="0.5" oninput="calculate()" class="w-full px-4 py-3 rounded-xl input-glass font-mono text-lg">
+          </div>
+
+          <div>
+            <label id="lbl-color" class="block text-sm font-semibold text-zinc-300 mb-2">Цвет профиля</label>
+            <select id="c-color" onchange="calculate()" class="w-full px-4 py-3 rounded-xl input-glass appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,<svg%20width=%2224%22%20height=%2224%22%20viewBox=%220%200%24%2024%22%20fill=%22none%22%20xmlns=%22http://www.w3.org/2000/svg%22><path%20d=%22M6%209L12%2015L18%209%22%20stroke=%22%23a1a1aa%22%20stroke-width=%222%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/></svg>')] bg-no-repeat bg-[position:right_1rem_center] pr-10">
+              <option value="1" id="opt-color-1">Белый классик</option>
+              <option value="1.2" id="opt-color-2">Цветная ламинация (Дуб, Орех, Антрацит)</option>
+              <option value="1.3" id="opt-color-3">Комбинированный (снаружи цвет, внутри белый)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="space-y-6 flex flex-col justify-between">
+          <div>
+            <label id="lbl-extras" class="block text-sm font-semibold text-zinc-300 mb-3">Дополнительно</label>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="c-extra-mosq" value="5000" onchange="calculate()" class="checkbox-custom">
+                <span id="ext-1" class="text-sm text-zinc-400 group-hover:text-white transition-colors">Москитная сетка + подоконник</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="c-extra-energy" value="8000" onchange="calculate()" class="checkbox-custom">
+                <span id="ext-2" class="text-sm text-zinc-400 group-hover:text-white transition-colors">Энергосберегающий стеклопакет</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="c-extra-shutters" value="25000" onchange="calculate()" class="checkbox-custom">
+                <span id="ext-3" class="text-sm text-zinc-400 group-hover:text-white transition-colors">Защитные рольставни</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="bg-zinc-900/80 rounded-2xl p-6 border border-brand-500/20">
+            <div class="text-sm text-zinc-400 mb-1" id="calc-total-lbl">Предварительная сумма:</div>
+            <div class="text-3xl sm:text-4xl font-mono font-bold text-brand-400 mb-4 tracking-tight"><span id="c-total-val">0</span> ₸</div>
+            
+            <div class="flex items-center gap-2 text-xs text-zinc-500 mb-6 font-semibold">
+              <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span id="calc-bonus">Доступна рассрочка - Замер по Таразу 0 ₸</span>
+            </div>
+
+            <a id="btn-calc-wa" href="#" target="_blank" class="block w-full py-4 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-bold text-center transition-transform active:scale-95">
+              Отправить расчет в WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Подвал -->
+  <footer class="mt-auto py-8 border-t border-zinc-900 text-center text-zinc-500 text-sm">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span id="footer-copy">© 2026 МАСТЕР ПЛАСТ. Производство в г. Тараз.</span>
+      <a id="footer-wa" href="#" target="_blank" class="text-zinc-400 hover:text-brand-400 transition-colors">WhatsApp: +7 (700) 877-76-43</a>
+    </div>
+  </footer>
+
+  <script>
+    const PHONE = "77008777643";
+    const BASE_WA_URL = `https://api.whatsapp.com/send?phone=${PHONE}&text=`;
+    const DEFAULT_MSG = "Привет, Максим! Посмотрел твой демо-сайт пластиковых окон (+)";
+    
+    // Переводы
+    const i18n = {
+      ru: {
+        "nav-contact-text": "Написать нам",
+        "hero-badge": "Заводское производство в Таразе - Опыт 10 лет",
+        "hero-title": "Пластиковые окна, балконы и витражи в рассрочку",
+        "hero-subtitle": "5-камерные профили, надежная фурнитура, москитная сетка при заказе и бесплатный выезд замерщика по Таразу.",
+        "btn-calc-scroll": "Рассчитать стоимость",
+        "hero-wa": "WhatsApp (+)",
+        "feat-1": "Рассрочка 0%", "feat-1-sub": "Кредит без переплаты",
+        "feat-2": "Скидки пенсионерам", "feat-2-sub": "Особые условия",
+        "feat-3": "Гарантия до 14 лет", "feat-3-sub": "На профиль ПВХ",
+        "products-title": "Что мы изготавливаем",
+        "prod-1-title": "Окна и двери ПВХ", "prod-1-desc": "Для частных домов и квартир. Теплоизоляция и защита от шума.",
+        "prod-2-title": "Остекление балконов", "prod-2-desc": "Балконы и лоджии под ключ. Расширение полезной площади.",
+        "prod-3-title": "Витражи и фасады", "prod-3-desc": "Сплошное остекление, офисные перегородки и бутики.",
+        "prod-4-title": "Защитные рольставни", "prod-4-desc": "Металл, порошковое покрытие, взломостойкость P6.",
+        "specs-title": "Технический стандарт",
+        "spec-1-name": "Камерность профиля", "spec-1-val": "5 камер",
+        "spec-2-name": "Системная глубина", "spec-2-val": "60 мм",
+        "spec-3-name": "Толщина стенки", "spec-3-val": "2.8 мм",
+        "spec-4-name": "Стеклопакет", "spec-4-val": "24 мм (двойной)",
+        "spec-5-name": "Армирование", "spec-5-val": "Металл 1.2 мм",
+        "palette-title": "Палитра ламинации",
+        "calc-title": "Калькулятор стоимости",
+        "calc-subtitle": "Мгновенный расчет и отправка спецификации мастеру",
+        "lbl-type": "Тип конструкции",
+        "opt-type-1": "2-створчатое окно", "opt-type-2": "3-створчатое окно", "opt-type-3": "Балконный блок (окно + дверь)", "opt-type-4": "Остекление лоджии / витраж",
+        "lbl-area": "Площадь (м²)",
+        "lbl-color": "Цвет профиля",
+        "opt-color-1": "Белый классик", "opt-color-2": "Цветная ламинация (Дуб, Орех, Антрацит)", "opt-color-3": "Комбинированный (снаружи цвет, внутри белый)",
+        "lbl-extras": "Дополнительно",
+        "ext-1": "Москитная сетка + подоконник", "ext-2": "Энергосберегающий стеклопакет", "ext-3": "Защитные рольставни",
+        "calc-total-lbl": "Предварительная сумма:",
+        "calc-bonus": "Доступна рассрочка - Замер по Таразу 0 ₸",
+        "btn-calc-wa": "Отправить расчет в WhatsApp",
+        "footer-copy": "© 2026 МАСТЕР ПЛАСТ. Производство в г. Тараз."
+      },
+      kz: {
+        "nav-contact-text": "Бізге жазу",
+        "hero-badge": "Тараздағы зауыттық өндіріс - 10 жылдық тәжірибе",
+        "hero-title": "Пластик терезелер, балкондар мен витраждар бөліп төлеуге",
+        "hero-subtitle": "5 камералы профильдер, сенімді фурнитура, тапсырыс кезінде масаға қарсы тор және Тараз бойынша тегін өлшеу.",
+        "btn-calc-scroll": "Құнын есептеу",
+        "hero-wa": "WhatsApp (+)",
+        "feat-1": "Бөліп төлеу 0%", "feat-1-sub": "Артық төлемсіз несие",
+        "feat-2": "Зейнеткерлерге жеңілдіктер", "feat-2-sub": "Арнайы шарттар",
+        "feat-3": "14 жылға дейін кепілдік", "feat-3-sub": "ПВХ профиліне",
+        "products-title": "Біз не өндіреміз",
+        "prod-1-title": "ПВХ терезелер мен есіктер", "prod-1-desc": "Жеке үйлер мен пәтерлер үшін. Жылу оқшаулау және шудан қорғау.",
+        "prod-2-title": "Балкондарды шынылау", "prod-2-desc": "Кілтке дейін балкондар мен лоджиялар. Пайдалы аумақты кеңейту.",
+        "prod-3-title": "Витраждар мен қасбеттер", "prod-3-desc": "Толық шынылау, кеңсе қалқалары мен бутиктер.",
+        "prod-4-title": "Қорғаныс рольставнилері", "prod-4-desc": "Металл, ұнтақты жабын, бұзуға төзімділік P6.",
+        "specs-title": "Техникалық стандарт",
+        "spec-1-name": "Профиль камералығы", "spec-1-val": "5 камера",
+        "spec-2-name": "Жүйелік тереңдік", "spec-2-val": "60 мм",
+        "spec-3-name": "Қабырға қалыңдығы", "spec-3-val": "2.8 мм",
+        "spec-4-name": "Шыныпакет", "spec-4-val": "24 мм (қос)",
+        "spec-5-name": "Арматуралау", "spec-5-val": "Металл 1.2 мм",
+        "palette-title": "Ламинация палитрасы",
+        "calc-title": "Құн калькуляторы",
+        "calc-subtitle": "Лезде есептеу және шеберге спецификация жіберу",
+        "lbl-type": "Конструкция түрі",
+        "opt-type-1": "2 жармалы терезе", "opt-type-2": "3 жармалы терезе", "opt-type-3": "Балкон блогы (терезе + есік)", "opt-type-4": "Лоджияны шынылау / витраж",
+        "lbl-area": "Ауданы (м²)",
+        "lbl-color": "Профиль түсі",
+        "opt-color-1": "Классикалық ақ", "opt-color-2": "Түрлі түсті ламинация", "opt-color-3": "Аралас (сырты түрлі түсті, іші ақ)",
+        "lbl-extras": "Қосымша",
+        "ext-1": "Масаға қарсы тор + терезе алды тақтайы", "ext-2": "Қуат үнемдейтін шыныпакет", "ext-3": "Қорғаныс рольставнилері",
+        "calc-total-lbl": "Алдын ала сома:",
+        "calc-bonus": "Бөліп төлеу қолжетімді - Тараз бойынша өлшеу 0 ₸",
+        "btn-calc-wa": "Есептеуді WhatsApp-қа жіберу",
+        "footer-copy": "© 2026 МАСТЕР ПЛАСТ. Тараз қаласындағы өндіріс."
+      }
+    };
+
+    let currentLang = 'ru';
+    let currentTotal = 0;
+
+    function switchLang(lang) {
+      currentLang = lang;
+      
+      document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+      document.getElementById('btn-kz').classList.toggle('active', lang === 'kz');
+
+      for (const [id, text] of Object.entries(i18n[lang])) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+      }
+      
+      calculate(); // Пересобираем ссылку WA с новым языком
+    }
+
+    function changeFrameColor(hex) {
+      document.getElementById('preview-outer').style.fill = hex;
+      document.getElementById('preview-inner').style.fill = hex;
+    }
+
+    function initLinks() {
+      const defaultUrl = BASE_WA_URL + encodeURIComponent(DEFAULT_MSG);
+      document.getElementById('nav-wa').href = defaultUrl;
+      document.getElementById('hero-wa').href = defaultUrl;
+      document.getElementById('footer-wa').href = defaultUrl;
+    }
+
+    function calculate() {
+      const typeSelect = document.getElementById('c-type');
+      const typePrice = parseFloat(typeSelect.value);
+      const typeName = typeSelect.options[typeSelect.selectedIndex].text;
+
+      const area = parseFloat(document.getElementById('c-area').value) || 0;
+      
+      const colorSelect = document.getElementById('c-color');
+      const colorMult = parseFloat(colorSelect.value);
+      const colorName = colorSelect.options[colorSelect.selectedIndex].text;
+
+      const cbMosq = document.getElementById('c-extra-mosq');
+      const cbEnergy = document.getElementById('c-extra-energy');
+      const cbShutters = document.getElementById('c-extra-shutters');
+
+      let extrasPrice = 0;
+      let extrasNames = [];
+      if (cbMosq.checked) { extrasPrice += parseFloat(cbMosq.value); extrasNames.push(document.getElementById('ext-1').innerText); }
+      if (cbEnergy.checked) { extrasPrice += parseFloat(cbEnergy.value); extrasNames.push(document.getElementById('ext-2').innerText); }
+      if (cbShutters.checked) { extrasPrice += parseFloat(cbShutters.value); extrasNames.push(document.getElementById('ext-3').innerText); }
+
+      // Формула: (База * Площадь * Коэф.Цвета) + Допы
+      currentTotal = Math.round((typePrice * area * colorMult) + extrasPrice);
+      
+      // Анимация счетчика (простая подстановка с пробелами)
+      document.getElementById('c-total-val').innerText = currentTotal.toLocaleString('ru-RU');
+
+      // Формирование ссылки WA
+      const extText = extrasNames.length > 0 ? extrasNames.join(', ') : (currentLang === 'ru' ? 'Нет' : 'Жоқ');
+      const msgLabelType = currentLang === 'ru' ? 'Тип' : 'Түрі';
+      const msgLabelArea = currentLang === 'ru' ? 'Площадь' : 'Ауданы';
+      const msgLabelColor = currentLang === 'ru' ? 'Цвет' : 'Түсі';
+      const msgLabelExtras = currentLang === 'ru' ? 'Допы' : 'Қосымша';
+      const msgLabelSum = currentLang === 'ru' ? 'Предварительная сумма' : 'Алдын ала сома';
+
+      const calcMsg = `Привет, Максим! Посмотрел твой демо-сайт пластиковых окон (+). Проверил калькулятор:\n- ${msgLabelType}: ${typeName}\n- ${msgLabelArea}: ${area} м²\n- ${msgLabelColor}: ${colorName}\n- ${msgLabelExtras}: ${extText}\n\n${msgLabelSum}: ${currentTotal.toLocaleString('ru-RU')} ₸`;
+      
+      document.getElementById('btn-calc-wa').href = BASE_WA_URL + encodeURIComponent(calcMsg);
+    }
+
+    // Инициализация при загрузке
+    window.onload = () => {
+      initLinks();
+      calculate();
+    }
+  </script>
+</body>
+</html>
