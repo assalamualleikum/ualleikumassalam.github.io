@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Максим Семиградов — Сайты-калькуляторы для мастеров в Таразе</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .signature-font { font-family: 'Caveat', cursive; }
+    /* Кастомный ползунок */
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background: #2563eb;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
+
+  <!-- Шапка -->
+  <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-sm group-hover:bg-blue-700 transition">
+          МС
+        </div>
+        <span class="font-semibold text-slate-900 tracking-tight">Максим Семиградов</span>
+      </a>
+      <div class="flex items-center gap-2 text-xs sm:text-sm font-medium text-blue-700 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">
+        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+        <span>Тараз • Готов к запуску</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-20">
+
+    <!-- Первый экран + Фишка -->
+    <section class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 space-y-6">
+        <div class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-md">
+          Для мастеров, бригад и производств
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 leading-tight tracking-tight">
+          Сайт с калькулятором цен, который <span class="text-blue-600">отсекает пустые звонки</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+          Клиент заходит по ссылке из Instagram или WhatsApp, сам считает примерную стоимость вашей работы и оставляет заявку. Вы тратите время только на реальные замеры и заказы.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="https://wa.me/77008777643?text=Здравствуйте,%20Максим!%20Хочу%20обсудить%20сайт-калькулятор%20под%20мои%20услуги" target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-sm shadow-blue-600/20">
+            Написать в WhatsApp
+          </a>
+          <a href="https://t.me/Yell0wac1d" target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-200 hover:border-blue-300 hover:text-blue-600 transition">
+            Telegram
+          </a>
+        </div>
+      </div>
+
+      <!-- Фишка: Интерактивный симулятор спасенного времени -->
+      <div class="lg:col-span-5">
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-blue-100 shadow-lg shadow-slate-200/50 space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="text-sm font-semibold text-slate-900">Сколько времени крадут вопросы «а сколько стоит?»</span>
+            <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Тест</span>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-600">Пустых звонков / переписок в день:</span>
+              <span id="callsCount" class="font-bold text-blue-600 text-base">6 шт.</span>
+            </div>
+            <input id="callsRange" type="range" min="2" max="20" value="6" class="w-full h-2 bg-slate-200 rounded-lg appearance-none">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+              <div class="text-xs text-slate-500">Вы теряете в месяц</div>
+              <div id="hoursLost" class="text-xl font-bold text-slate-900 mt-1">18 часов</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">на пустые расчеты</div>
+            </div>
+            <div class="bg-blue-50/70 p-3.5 rounded-xl border border-blue-100">
+              <div class="text-xs text-blue-700">Вернет калькулятор</div>
+              <div id="hoursSaved" class="text-xl font-bold text-blue-600 mt-1">~14 часов</div>
+              <div class="text-[11px] text-blue-600/80 mt-0.5">2 полноценных рабочих дня</div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Калькулятор берет первичный расчет на себя 24/7, даже когда вы на объекте с инструментом в руках.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Живые примеры работ -->
+    <section id="examples" class="space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Посмотрите, как это работает вживую</h2>
+        <p class="text-slate-600">Откройте с телефона — всё грузится за доли секунды. Под ваши услуги и расценки адаптирую за 48 часов.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <!-- Пример 1: Потолки -->
+        <a href="https://assalamualleikum.github.io/ualleikumassalam.github.io/potolki/" target="_blank" rel="noopener"
+           class="group bg-white rounded-2xl p-6 border border-slate-200 hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between space-y-6">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Рабочий пример №1</span>
+              <span class="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition">Открыть →</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Натяжные потолки (Тараз)</h3>
+            <p class="text-sm text-slate-600">
+              Расчет стоимости по площади, количеству углов, светильников и люстр с моментальной отправкой сметы мастеру.
+            </p>
+          </div>
+          <div class="text-sm font-semibold text-blue-600">Покликать калькулятор потолков</div>
+        </a>
+
+        <!-- Пример 2: Окна -->
+        <a href="https://assalamualleikum.github.io/ualleikumassalam.github.io/okna/" target="_blank" rel="noopener"
+           class="group bg-white rounded-2xl p-6 border border-slate-200 hover:border-blue-400 hover:shadow-md transition flex flex-col justify-between space-y-6">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md">Рабочий пример №2</span>
+              <span class="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition">Открыть →</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Пластиковые окна и остекление</h3>
+            <p class="text-sm text-slate-600">
+              Выбор типа конструкции, профиля и размеров. Клиент сразу видит ориентировочный бюджет и записывается на замер.
+            </p>
+          </div>
+          <div class="text-sm font-semibold text-blue-600">Покликать калькулятор окон</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Условия и цена -->
+    <section class="bg-white rounded-3xl p-7 sm:p-10 border border-slate-200 shadow-sm">
+      <div class="grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+          <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Честные условия без рисков</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Готовая страница под ключ за 48 часов</h2>
+          <ul class="space-y-2.5 text-sm sm:text-base text-slate-600 pt-2">
+            <li class="flex items-start gap-2.5">
+              <span class="text-blue-600 font-bold">✓</span>
+              <span>Настраиваю калькулятор строго под ваш прайс и специфику работы</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-blue-600 font-bold">✓</span>
+              <span>Добавляю ваши фото работ, контакты и прямую кнопку в WhatsApp</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-blue-600 font-bold">✓</span>
+              <span>Никакой абонентской платы — сайт работает бесплатно и без сбоев</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-5 bg-slate-50 rounded-2xl p-6 border border-slate-200/80 space-y-4">
+          <div>
+            <div class="text-sm text-slate-500">Полная стоимость запуска</div>
+            <div class="text-3xl font-bold text-slate-900 mt-1">35 000 ₸</div>
+          </div>
+          <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl text-xs sm:text-sm text-blue-900 font-medium">
+            Оплата 50/50: 17 500 ₸ на старте, вторую половину отдаете уже с первого реального заказа через сайт.
+          </div>
+          <a href="https://wa.me/77008777643?text=Здравствуйте,%20Максим!%20Интересует%20запуск%20сайта%20за%2035%20000%20тг" target="_blank" rel="noopener"
+             class="block w-full text-center py-3 px-4 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+            Обсудить запуск
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Подвал + Фирменный рукописный автограф -->
+  <footer class="border-t border-slate-200 bg-white mt-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+      <div>© 2026 Максим Семиградов • Тараз</div>
+      <div class="flex items-center gap-5">
+        <a href="https://wa.me/77008777643" target="_blank" rel="noopener" class="hover:text-blue-600 transition">WhatsApp: +7 700 877 7643</a>
+        <a href="https://t.me/Yell0wac1d" target="_blank" rel="noopener" class="hover:text-blue-600 transition">Telegram</a>
+      </div>
+    </div>
+    
+    <!-- Маленький светло-контрастирующий рукописный автограф -->
+    <div class="pb-5 text-center">
+      <span class="signature-font text-lg text-blue-300/90 hover:text-blue-500 transition-colors select-none tracking-wide">
+        made by А, Максим
+      </span>
+    </div>
+  </footer>
+
+  <!-- Скрипт симулятора времени -->
+  <script>
+    const range = document.getElementById('callsRange');
+    const callsCount = document.getElementById('callsCount');
+    const hoursLost = document.getElementById('hoursLost');
+    const hoursSaved = document.getElementById('hoursSaved');
+
+    range.addEventListener('input', (e) => {
+      const calls = parseInt(e.target.value, 10);
+      callsCount.textContent = `${calls} шт.`;
+      // Средний пустой разговор/расчет = 6 минут, 30 дней в месяце
+      const totalHours = Math.round((calls * 6 * 30) / 60);
+      const savedHours = Math.max(1, Math.round(totalHours * 0.8));
+      hoursLost.textContent = `${totalHours} ч.`;
+      hoursSaved.textContent = `~${savedHours} ч.`;
+    });
+  </script>
+
+</body>
+</html>
