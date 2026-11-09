@@ -13,13 +13,25 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230284c7'/%3E%3Cpath d='M26 72V28h11l13 24 13-24h11v44H63V46L50 68 37 46v26H26z' fill='%23ffffff'/%3E%3C/svg%3E">
   <style>
     body { font-family: 'Inter', sans-serif; }
+    input[type=range] {
+      touch-action: manipulation;
+    }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      height: 22px;
-      width: 22px;
+      height: 24px;
+      width: 24px;
       border-radius: 50%;
       background: #0284c7;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+    }
+    input[type=range]::-moz-range-thumb {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0284c7;
+      cursor: pointer;
+      border: none;
       box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
     }
   </style>
@@ -27,7 +39,7 @@
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
   <!-- Шапка -->
-  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-slate-200/80">
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group">
         <div class="w-9 h-9 rounded-xl bg-sky-600 text-white font-extrabold flex items-center justify-center text-base shadow-sm group-hover:bg-sky-700 transition">
@@ -51,89 +63,8 @@
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-20">
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-16 space-y-16 sm:space-y-20">
 
-    <!-- Первый экран: Личный бренд + Калькулятор -->
-    <section id="calculator" class="grid lg:grid-cols-12 gap-10 items-center">
-      <div class="lg:col-span-6 space-y-6">
-        <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-700 bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-100">
-          <span>Тараз • Печать на ткани и сервис станка</span>
-        </div>
-
-        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 leading-[1.15] tracking-tight">
-          Четкие DTF-принты на одежду и <span class="text-sky-600">точная настройка</span> принтеров
-        </h1>
-
-        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
-          Привет! Я Мухаммад. Делаю яркую, эластичную печать, которая выдерживает десятки стирок без трещин, а также настраиваю DTF-оборудование, чтобы цвета попадали в макет с первого прогона.
-        </p>
-
-        <div class="grid grid-cols-3 gap-3 pt-1">
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-            <div class="text-lg sm:text-xl font-extrabold text-slate-900">50+ стирок</div>
-            <div class="text-xs text-slate-500 mt-0.5">держится принт</div>
-          </div>
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-            <div class="text-lg sm:text-xl font-extrabold text-slate-900">От 1 шт.</div>
-            <div class="text-xs text-slate-500 mt-0.5">и оптовые тиражи</div>
-          </div>
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
-            <div class="text-lg sm:text-xl font-extrabold text-slate-900">Выезд</div>
-            <div class="text-xs text-slate-500 mt-0.5">настройка по городу</div>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-3 pt-2">
-          <a href="https://wa.me/77072346292?text=Привет,%20Мухаммад!%20Хочу%20узнать%20по%20DTF-печати%20или%20настройке%20принтера" target="_blank" rel="noopener"
-             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 transition shadow-sm shadow-sky-600/20">
-            Написать в WhatsApp
-          </a>
-          <a href="#services"
-             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-200 hover:border-sky-300 hover:text-sky-700 transition">
-            Услуги и сервис
-          </a>
-        </div>
-      </div>
-
-      <!-- Интерактивный калькулятор стоимости -->
-      <div class="lg:col-span-6">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl shadow-slate-200/40 space-y-6">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div>
-              <h2 class="text-lg font-bold text-slate-900">Быстрый расчет заказа</h2>
-              <p class="text-xs text-slate-500 mt-0.5">Ориентировочная цена с учетом скидки за объем</p>
-            </div>
-            <span class="text-xs font-semibold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md">Онлайн-смета</span>
-          </div>
-
-          <!-- Выбор формата -->
-          <div class="space-y-2.5">
-            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500">1. Выберите формат задачи</label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="formatOptions">
-              <button type="button" data-price="1800" data-unit="шт." data-name="Принт А4 / грудь"
-                class="format-btn text-left p-3 rounded-xl border-2 border-sky-600 bg-sky-50/60 transition">
-                <div class="text-sm font-bold text-slate-900">Принт А4 / лого</div>
-                <div class="text-xs text-slate-500 mt-0.5">от 1 800 ₸ / шт.</div>
-              </button>
-
-              <button type="button" data-price="2800" data-unit="шт." data-name="Большой принт А3"
-                class="format-btn text-left p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white transition">
-                <div class="text-sm font-bold text-slate-900">Принт А3 (спина)</div>
-                <div class="text-xs text-slate-500 mt-0.5">от 2 800 ₸ / шт.</div>
-              </button>
-
-              <button type="button" data-price="6500" data-unit="пог. м" data-name="Рулонная пленка (пог. метр)"
-                class="format-btn text-left p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white transition">
-                <div class="text-sm font-bold text-slate-900">Пленка в рулоне</div>
-                <div class="text-xs text-slate-500 mt-0.5">от 6 500 ₸ / метр</div>
-              </button>
-            </div>
-          </div>
-
-          <!-- Ползунок количества -->
-          <div class="space-y-3 pt-1">
-            <div class="flex justify-between items-center">
-              <label for="qtyRange" class="text-xs font-semibold uppercase tracking-wider text-slate-500">2. Тираж / объем</label>
-              <span id="qtyDisplay" class="text-base font-extrabold text-sky-600 bg-sky-50 px-3 py-0.5 rounded-lg">10 шт.</span>
-            </div>
-            <input id="qtyRange
+    <!-- Блок 1: Личный бренд + Калькулятор -->
+    <section id="calculator" class="grid lg:grid-cols-12 gap-8 sm:gap-10 items-center">
+      <div class="
