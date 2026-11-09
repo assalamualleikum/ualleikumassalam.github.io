@@ -60,4 +60,134 @@
     <!-- Первый экран: Личный бренд + Калькулятор -->
     <section id="calculator" class="grid lg:grid-cols-12 gap-10 items-center">
       <div class="lg:col-span-6 space-y-6">
-        <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-700 bg-sky-50 px-
+        <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sky-700 bg-sky-50 px-3 py-1.5 rounded-lg border border-sky-100">
+          <span>Тараз • Печать на ткани и сервис станка</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 leading-[1.15] tracking-tight">
+          Четкие DTF-принты на одежду и <span class="text-sky-600">точная настройка</span> принтеров
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+          Привет! Я Мухаммад. Делаю яркую, эластичную печать, которая выдерживает десятки стирок без трещин, а также настраиваю DTF-оборудование, чтобы цвета попадали в макет с первого прогона.
+        </p>
+
+        <!-- Короткие факты / Доверие -->
+        <div class="grid grid-cols-3 gap-3 pt-1">
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div class="text-lg sm:text-xl font-extrabold text-slate-900">50+ стирок</div>
+            <div class="text-xs text-slate-500 mt-0.5">держится принт</div>
+          </div>
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div class="text-lg sm:text-xl font-extrabold text-slate-900">От 1 шт.</div>
+            <div class="text-xs text-slate-500 mt-0.5">и оптовые тиражи</div>
+          </div>
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs">
+            <div class="text-lg sm:text-xl font-extrabold text-slate-900">Выезд</div>
+            <div class="text-xs text-slate-500 mt-0.5">настройка по городу</div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="https://wa.me/77002111387?text=Привет,%20Мухаммад!%20Хочу%20узнать%20по%20DTF-печати%20или%20настройке%20принтера" target="_blank" rel="noopener"
+             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 transition shadow-sm shadow-sky-600/20">
+            Написать в WhatsApp
+          </a>
+          <a href="#services"
+             class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-white text-slate-700 font-semibold border border-slate-200 hover:border-sky-300 hover:text-sky-700 transition">
+            Услуги и сервис
+          </a>
+        </div>
+      </div>
+
+      <!-- Интерактивный калькулятор стоимости -->
+      <div class="lg:col-span-6">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xl shadow-slate-200/40 space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Быстрый расчет заказа</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Ориентировочная цена с учетом скидки за объем</p>
+            </div>
+            <span class="text-xs font-semibold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md">Онлайн-смета</span>
+          </div>
+
+          <!-- Выбор формата -->
+          <div class="space-y-2.5">
+            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500">1. Выберите формат задачи</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="formatOptions">
+              <button type="button" data-price="1800" data-unit="шт." data-name="Принт А4 / грудь"
+                class="format-btn active text-left p-3 rounded-xl border-2 border-sky-600 bg-sky-50/60 transition">
+                <div class="text-sm font-bold text-slate-900">Принт А4 / лого</div>
+                <div class="text-xs text-slate-500 mt-0.5">от 1 800 ₸ / шт.</div>
+              </button>
+
+              <button type="button" data-price="2800" data-unit="шт." data-name="Большой принт А3"
+                class="format-btn text-left p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white transition">
+                <div class="text-sm font-bold text-slate-900">Принт А3 (спина)</div>
+                <div class="text-xs text-slate-500 mt-0.5">от 2 800 ₸ / шт.</div>
+              </button>
+
+              <button type="button" data-price="6500" data-unit="пог. м" data-name="Рулонная пленка (пог. метр)"
+                class="format-btn text-left p-3 rounded-xl border border-slate-200 hover:border-sky-300 bg-white transition">
+                <div class="text-sm font-bold text-slate-900">Пленка в рулоне</div>
+                <div class="text-xs text-slate-500 mt-0.5">от 6 500 ₸ / метр</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ползунок количества -->
+          <div class="space-y-3 pt-1">
+            <div class="flex justify-between items-center">
+              <label for="qtyRange" class="text-xs font-semibold uppercase tracking-wider text-slate-500">2. Тираж / объем</label>
+              <span id="qtyDisplay" class="text-base font-extrabold text-sky-600 bg-sky-50 px-3 py-0.5 rounded-lg">10 шт.</span>
+            </div>
+            <input id="qtyRange" type="range" min="1" max="100" value="10" class="w-full h-2 bg-slate-200 rounded-lg appearance-none">
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>1 (розница)</span>
+              <span>25 (мелкий опт -15%)</span>
+              <span>50+ (опт -25%)</span>
+            </div>
+          </div>
+
+          <!-- Итоговая плашка -->
+          <div class="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="text-xs text-slate-500 flex items-center gap-2">
+                <span>Примерная стоимость:</span>
+                <span id="discountBadge" class="hidden text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Скидка учтена</span>
+              </div>
+              <div id="totalPrice" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">18 000 ₸</div>
+            </div>
+
+            <a id="sendOrderBtn" href="https://wa.me/77002111387?text=Привет,%20Мухаммад!%20Посчитал%20на%20сайте:%20Принт%20А4%20/%20грудь,%2010%20шт.%20(~18%20000%20тг)." target="_blank" rel="noopener"
+               class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-sky-600 transition shrink-0">
+              Отправить расчет →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Два главных направления работы -->
+    <section id="services" class="space-y-8">
+      <div class="max-w-2xl space-y-2">
+        <span class="text-xs font-semibold uppercase tracking-wider text-sky-600">Чем я занимаюсь</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Два направления — один ответственный подход</h2>
+        <p class="text-slate-600">Работаю на совесть: делаю как для себя.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Карточка 1: Печать -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-200/90 shadow-xs space-y-5 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-11 h-11 rounded-2xl bg-sky-50 border border-sky-100 text-sky-600 flex items-center justify-center font-bold text-lg">
+              01
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">DTF-печать на одежде и крое</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Переносим логотипы, иллюстрации и надписи на хлопок, синтетику, футер и смесовые ткани. Принт тянется вместе с тканью и не выцветает.
+            </p>
+            <ul class="space-y-2 text-sm text-slate-700 pt-1">
+              <li class="flex items-center gap-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-600"></span>
+                <span>Мерч для локальных брендов
